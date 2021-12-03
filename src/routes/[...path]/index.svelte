@@ -23,7 +23,18 @@
 					title
 					shortDescription
 					longDescription
-					thumbnail
+					thumbnail,
+					children {
+                      title
+                      shortDescription
+					  shortLink
+                      icon
+						seo {
+							description
+							keywords
+							url
+						} 
+                    } 
 				} 
 			}
 		}`;
@@ -41,18 +52,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { microtime } from '$lib/stores/headerStore';
+	import Category from '$lib/Components/Category/index.svelte';
 
 	export let objectBySeoUrl: any;
 
 	onMount(async () => {
-		const currentTime = Date.now()
+		const currentTime = Date.now();
 		$microtime = currentTime;
 	});
 </script>
 
 <main>
-	{#if objectBySeoUrl}
-		{JSON.stringify(objectBySeoUrl)}
+	{#if objectBySeoUrl?.category}
+		<Category category={objectBySeoUrl.category} />
 	{/if}
 
 	<!-- Trending products -->

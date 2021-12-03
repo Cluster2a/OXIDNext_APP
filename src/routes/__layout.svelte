@@ -36,6 +36,7 @@
 			}`;
 
 		const result = await client.query(query, { langId, url }).toPromise();
+
 		return {
 			props: {
 				categorieTree: result?.data?.categorieTree,
@@ -44,7 +45,6 @@
 		};
 	}
 </script>
-
 
 <script lang="ts">
 	import Header from '$lib/Components/Header/index.svelte';
@@ -56,7 +56,6 @@
 	export let categorieTree: CategorieTree[];
 	export let languages: Languages[];
 </script>
-
 
 <div class="bg-white">
 	<Header {categorieTree} {languages} />

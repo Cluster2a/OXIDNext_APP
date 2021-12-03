@@ -11,13 +11,11 @@
 					<div class="group relative relative flex">
 						<!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
 
-						<button
-							type="button"
+						<a
 							class="border-transparent outline-none focus:outline-none text-white hover:text-gray-500 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
-							aria-expanded="true"
-							aria-haspopup="true"
-						>
-							{category.title}
+							sveltekit:prefetch
+							href={`/${category.link}`}
+							>{category.title}
 							{#if category.subCategories.length > 0}
 								<svg
 									class="-mr-1 ml-2 h-5 w-5"
@@ -33,7 +31,7 @@
 									/>
 								</svg>
 							{/if}
-						</button>
+						</a>
 
 						{#if category.subCategories.length > 0}
 							<div

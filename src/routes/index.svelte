@@ -1,15 +1,12 @@
-
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { microtime } from '$lib/stores/headerStore';
 
-
 	onMount(async () => {
-		const currentTime = Date.now()
+		const currentTime = Date.now();
 		$microtime = currentTime;
 	});
 </script>
-
 
 <main>
 	<!-- Hero -->
@@ -20,10 +17,7 @@
 					class="w-full h-full absolute"
 					style="background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2));"
 				/>
-				<img
-					src="/background.webp"
-					class="w-full h-full object-cover top-0 left-0 abbsolute"
-				/>
+				<img src="/background.webp" class="w-full h-full object-cover top-0 left-0 abbsolute" />
 			</div>
 			<div class="relative bg-gray-900 lg:bg-transparent">
 				<div class="max-w-7xl z-10 mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-2">

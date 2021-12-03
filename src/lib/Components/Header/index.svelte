@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
+	import { browser } from '$app/env';
 	import LogoLGPlus from '$lib/Components/Header/LogoLGPlus.svelte';
 	import LogoLGMinus from '$lib/Components/Header/LogoLGMinus.svelte';
 	import MobileMenu from '$lib/Components/Header/MobileMenu.svelte';
@@ -20,8 +20,12 @@
 	let stickyHeader = false;
 
 	const calculateScroll = () => {
+		if (!browser) {
+			return;
+		}
+
 		const elementTarget: HTMLElement = document.querySelector('.masterhead');
-		if(!elementTarget) {
+		if (!elementTarget) {
 			stickyHeader = true;
 		} else {
 			if (y > elementTarget.offsetTop + elementTarget.offsetHeight) {
@@ -32,11 +36,10 @@
 		}
 	};
 
-	microtime.subscribe(value => {
-		if(value) {
+	microtime.subscribe((value) => {
+		if (value) {
 			calculateScroll();
 		}
-		
 	});
 
 	onMount(async () => {
@@ -51,14 +54,15 @@
 <header class="relative z-10">
 	<nav aria-label="Top">
 		<!-- Secondary navigation -->
-		<div 
+		<div
 			class:fixed={stickyHeader}
 			class:top-0={stickyHeader}
 			class:bg-gray-600={stickyHeader}
 			class:z-50={stickyHeader}
 			class:absolute={!stickyHeader}
 			class:bg-transparent={!stickyHeader}
-			class="w-full">
+			class="w-full"
+		>
 			<div class="">
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div class="h-16 flex items-center justify-between">
@@ -261,8 +265,7 @@
 														d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
 													/>
 												</svg>
-												<span
-													class="ml-2 text-sm font-medium text-white group-hover:text-gray-800"
+												<span class="ml-2 text-sm font-medium text-white group-hover:text-gray-800"
 													>0</span
 												>
 												<span class="sr-only">items in cart, view bag</span>
