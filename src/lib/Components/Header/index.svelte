@@ -85,7 +85,6 @@
 									<div class="flex">
 										<div class="group relative flex">
 											<!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-
 											<button
 												type="button"
 												class="border-transparent outline-none focus:outline-none text-white hover:text-gray-500 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"

@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { select_option } from 'svelte/internal';
-
-	export let category: any;
-	console.log(category);
+	import type { Category as CategoryType } from '$lib/generated/graphql';
+	import ProductList from '$lib/Components/Product/List.svelte';
+	export let category: CategoryType;
 </script>
 
 {#if category && category.thumbnail}
@@ -11,7 +10,7 @@
 		<div class="relative">
 			<div
 				class="relative bg-gray-900 lg:bg-transparent bg-cover bg-no-repeat"
-				style="background-position: 50% 25%; background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2)),url({category.thumbnail});"
+				style="background-position: 50% 25%; background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2)),url('{category.thumbnail}');"
 			>
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div class="max-w-2xl mx-auto py-24 lg:py-34 lg:max-w-none">
@@ -42,7 +41,7 @@
 						<a sveltekit:prefetch href={`/${childCategory.shortLink}`}>
 							<div class="group relative">
 								<div
-									class="card-zoom flex items-center justify-center relative overflow-hidden w-full shadow-xl h-60 h-80 bg-white overflow-hidden sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"
+									class="card-zoom flex rounded-md items-center justify-center relative overflow-hidden w-full shadow-xl h-60 h-80 bg-white overflow-hidden sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"
 								>
 									<div
 										class="card-zoom-image absolute w-full h-full transition-all duration-500 ease-in-out transform bg-center bg-cover"
@@ -62,6 +61,10 @@
 			</div>
 		</div>
 	</section>
+{/if}
+
+{#if category && category?.products && category.products.length > 0}
+	<ProductList products={category.products} />
 {/if}
 
 <style>
