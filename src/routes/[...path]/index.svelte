@@ -18,17 +18,21 @@
 				type
 				id
 				lang
+				bredcrumbs {
+					link
+					title
+    			} 
 				category {
 					id
 					title
 					shortDescription
 					longDescription
-					thumbnail,
+					previewImage
 					children {
 						title
 						shortDescription
 						shortLink
-						icon
+						thumbnail
 						seo {
 							description
 							keywords
@@ -40,6 +44,15 @@
 						title
 						shortDescription
 						shortLink
+						imageGallery {
+							images {
+								image
+								icon
+								zoom
+							}
+							icon
+							thumb
+						} 
 						price {
 							currency {
 								name
@@ -88,7 +101,7 @@
 
 <main>
 	{#if objectBySeoUrl?.category}
-		<Category category={objectBySeoUrl.category} />
+		<Category category={objectBySeoUrl.category} breadCrumbs={objectBySeoUrl.bredcrumbs} />
 	{/if}
 
 	<!-- Trending products -->

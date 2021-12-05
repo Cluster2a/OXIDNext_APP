@@ -6,7 +6,7 @@ specifiers:
   '@graphql-codegen/cli': ^2.3.0
   '@graphql-codegen/introspection': ^2.1.0
   '@graphql-codegen/typescript': ^2.4.1
-  '@graphql-codegen/typescript-graphql-request': ^4.3.1
+  '@graphql-codegen/typescript-graphql-request': ^4.3.2
   '@graphql-codegen/typescript-operations': ^2.2.1
   '@sveltejs/adapter-node': next
   '@sveltejs/kit': 1.0.0-next.198
@@ -26,7 +26,7 @@ specifiers:
   fs-extra: ^10.0.0
   graphql: ^16.0.1
   node-fetch: ^3.1.0
-  prettier: ^2.5.0
+  prettier: ^2.5.1
   prettier-plugin-svelte: ^2.5.0
   svelte: ^3.44.2
   svelte-check: ^2.2.10
@@ -49,7 +49,7 @@ devDependencies:
   '@graphql-codegen/cli': 2.3.0_graphql@16.0.1+typescript@4.5.2
   '@graphql-codegen/introspection': 2.1.0_graphql@16.0.1
   '@graphql-codegen/typescript': 2.4.1_graphql@16.0.1
-  '@graphql-codegen/typescript-graphql-request': 4.3.1_graphql@16.0.1
+  '@graphql-codegen/typescript-graphql-request': 4.3.2_graphql@16.0.1
   '@graphql-codegen/typescript-operations': 2.2.1_graphql@16.0.1
   '@sveltejs/adapter-node': 1.0.0-next.55
   '@sveltejs/kit': 1.0.0-next.198_svelte@3.44.2
@@ -65,8 +65,8 @@ devDependencies:
   eslint-plugin-svelte3: 3.2.1_eslint@8.4.0+svelte@3.44.2
   fs-extra: 10.0.0
   node-fetch: 3.1.0
-  prettier: 2.5.0
-  prettier-plugin-svelte: 2.5.0_prettier@2.5.0+svelte@3.44.2
+  prettier: 2.5.1
+  prettier-plugin-svelte: 2.5.0_prettier@2.5.1+svelte@3.44.2
   svelte: 3.44.2
   svelte-check: 2.2.10_svelte@3.44.2
   svelte-preprocess: 4.9.8_svelte@3.44.2+typescript@4.5.2
@@ -1051,10 +1051,10 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@graphql-codegen/typescript-graphql-request/4.3.1_graphql@16.0.1:
+  /@graphql-codegen/typescript-graphql-request/4.3.2_graphql@16.0.1:
     resolution:
       {
-        integrity: sha512-fbsfv2JNvy4++v/ZWl0NYjndSlmw5yXPKVv7/SkvSyHMT0WMJIr7DRl0kvYg7gOdRgfoI1TC8w9lmdmqu8WfSw==
+        integrity: sha512-47mIgf9gFnqqRtE/VGMIyj9ThJ2i2wmgFWPVGlG9jysusUCP+y1KUGstbkAfXlNymhVugdm1vhrqn07yGAoa0A==
       }
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
@@ -6911,7 +6911,7 @@ packages:
     engines: { node: '>=4' }
     dev: true
 
-  /prettier-plugin-svelte/2.5.0_prettier@2.5.0+svelte@3.44.2:
+  /prettier-plugin-svelte/2.5.0_prettier@2.5.1+svelte@3.44.2:
     resolution:
       {
         integrity: sha512-+iHY2uGChOngrgKielJUnqo74gIL/EO5oeWm8MftFWjEi213lq9QYTOwm1pv4lI1nA61tdgf80CF2i5zMcu1kw==
@@ -6920,14 +6920,14 @@ packages:
       prettier: ^1.16.4 || ^2.0.0
       svelte: ^3.2.0
     dependencies:
-      prettier: 2.5.0
+      prettier: 2.5.1
       svelte: 3.44.2
     dev: true
 
-  /prettier/2.5.0:
+  /prettier/2.5.1:
     resolution:
       {
-        integrity: sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==
+        integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==
       }
     engines: { node: '>=10.13.0' }
     hasBin: true

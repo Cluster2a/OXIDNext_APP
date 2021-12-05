@@ -9,7 +9,7 @@
 	<div class="group relative">
 		<div class="w-full bg-gray-200 rounded-md overflow-hidden aspect-w-1 aspect-h-1">
 			<img
-				src="https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg"
+				src={product.imageGallery.images[0].zoom}
 				alt="Black machined steel pen with hexagonal grip and small white logo at top."
 				class="w-full h-full object-center object-cover group-hover:opacity-75"
 			/>

@@ -344,6 +344,20 @@ export type BasketProductVats = {
 	vatRate: Scalars['Float'];
 };
 
+export type BreadCrumbs = {
+	__typename?: 'BreadCrumbs';
+	/**
+	 *
+	 *
+	 */
+	link: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
+	title: Scalars['String'];
+};
+
 export type Category = {
 	__typename?: 'Category';
 	/**
@@ -394,6 +408,11 @@ export type Category = {
 	 *
 	 */
 	position: Scalars['Int'];
+	/**
+	 *
+	 *
+	 */
+	previewImage: Scalars['String'];
 	/**
 	 * If specified, all products, with price higher than specified,
 	 * will be shown in this category
@@ -547,6 +566,11 @@ export type Common = {
 	 *
 	 */
 	article?: Maybe<Product>;
+	/**
+	 *
+	 *
+	 */
+	bredcrumbs: Array<BreadCrumbs>;
 	/**
 	 *
 	 *
@@ -914,22 +938,6 @@ export type DeliveryAddress = {
 	zipCode: Scalars['String'];
 };
 
-export type DeliveryAddressInput = {
-	additionalInfo?: InputMaybe<Scalars['String']>;
-	city?: InputMaybe<Scalars['String']>;
-	company?: InputMaybe<Scalars['String']>;
-	countryId?: InputMaybe<Scalars['ID']>;
-	fax?: InputMaybe<Scalars['String']>;
-	firstName?: InputMaybe<Scalars['String']>;
-	lastName?: InputMaybe<Scalars['String']>;
-	phone?: InputMaybe<Scalars['String']>;
-	salutation?: InputMaybe<Scalars['String']>;
-	stateId?: InputMaybe<Scalars['ID']>;
-	street?: InputMaybe<Scalars['String']>;
-	streetNumber?: InputMaybe<Scalars['String']>;
-	zipCode?: InputMaybe<Scalars['String']>;
-};
-
 export type DeliveryMethod = DeliveryMethodInterface & {
 	__typename?: 'DeliveryMethod';
 	/**
@@ -1122,24 +1130,6 @@ export type InvoiceAddress = {
 	zipCode: Scalars['String'];
 };
 
-export type InvoiceAddressInput = {
-	additionalInfo?: InputMaybe<Scalars['String']>;
-	city?: InputMaybe<Scalars['String']>;
-	company?: InputMaybe<Scalars['String']>;
-	countryId?: InputMaybe<Scalars['ID']>;
-	fax?: InputMaybe<Scalars['String']>;
-	firstName?: InputMaybe<Scalars['String']>;
-	lastName?: InputMaybe<Scalars['String']>;
-	mobile?: InputMaybe<Scalars['String']>;
-	phone?: InputMaybe<Scalars['String']>;
-	salutation?: InputMaybe<Scalars['String']>;
-	stateId?: InputMaybe<Scalars['ID']>;
-	street?: InputMaybe<Scalars['String']>;
-	streetNumber?: InputMaybe<Scalars['String']>;
-	vatID?: InputMaybe<Scalars['String']>;
-	zipCode?: InputMaybe<Scalars['String']>;
-};
-
 export type Language = {
 	__typename?: 'Language';
 	/**
@@ -1275,21 +1265,6 @@ export type Mutation = {
 	 *
 	 *
 	 */
-	basketMakePrivate: Basket;
-	/**
-	 *
-	 *
-	 */
-	basketMakePublic: Basket;
-	/**
-	 *
-	 *
-	 */
-	basketRemove: Scalars['Boolean'];
-	/**
-	 *
-	 *
-	 */
 	basketRemoveItem: Basket;
 	/**
 	 *
@@ -1300,57 +1275,7 @@ export type Mutation = {
 	 *
 	 *
 	 */
-	basketSetDeliveryAddress: Basket;
-	/**
-	 *
-	 *
-	 */
-	basketSetDeliveryMethod: Basket;
-	/**
-	 *
-	 *
-	 */
-	basketSetPayment: Basket;
-	/**
-	 *
-	 *
-	 */
 	contactRequest: Scalars['Boolean'];
-	/**
-	 *
-	 *
-	 */
-	customerBirthdateUpdate: Customer;
-	/**
-	 *
-	 *
-	 */
-	customerDelete: Scalars['Boolean'];
-	/**
-	 *
-	 *
-	 */
-	customerDeliveryAddressAdd: DeliveryAddress;
-	/**
-	 *
-	 *
-	 */
-	customerDeliveryAddressDelete: Scalars['Boolean'];
-	/**
-	 *
-	 *
-	 */
-	customerEmailUpdate: Customer;
-	/**
-	 *
-	 *
-	 */
-	customerInvoiceAddressSet: InvoiceAddress;
-	/**
-	 *
-	 *
-	 */
-	customerPasswordChange: Scalars['Boolean'];
 	/**
 	 *
 	 *
@@ -1387,26 +1312,6 @@ export type Mutation = {
 	 *
 	 */
 	placeOrder: Order;
-	/**
-	 *
-	 *
-	 */
-	reviewDelete: Scalars['Boolean'];
-	/**
-	 *
-	 *
-	 */
-	reviewSet: Review;
-	/**
-	 *
-	 *
-	 */
-	wishedPriceDelete: Scalars['Boolean'];
-	/**
-	 *
-	 *
-	 */
-	wishedPriceSet: WishedPrice;
 };
 
 export type MutationBasketAddItemArgs = {
@@ -1424,18 +1329,6 @@ export type MutationBasketCreateArgs = {
 	basket: BasketInput;
 };
 
-export type MutationBasketMakePrivateArgs = {
-	basketId: Scalars['ID'];
-};
-
-export type MutationBasketMakePublicArgs = {
-	basketId: Scalars['ID'];
-};
-
-export type MutationBasketRemoveArgs = {
-	basketId: Scalars['ID'];
-};
-
 export type MutationBasketRemoveItemArgs = {
 	amount: Scalars['Float'];
 	basketId: Scalars['ID'];
@@ -1447,48 +1340,8 @@ export type MutationBasketRemoveVoucherArgs = {
 	voucherId: Scalars['ID'];
 };
 
-export type MutationBasketSetDeliveryAddressArgs = {
-	basketId: Scalars['ID'];
-	deliveryAddressId?: InputMaybe<Scalars['ID']>;
-};
-
-export type MutationBasketSetDeliveryMethodArgs = {
-	basketId: Scalars['ID'];
-	deliveryMethodId: Scalars['ID'];
-};
-
-export type MutationBasketSetPaymentArgs = {
-	basketId: Scalars['ID'];
-	paymentId: Scalars['ID'];
-};
-
 export type MutationContactRequestArgs = {
 	request?: InputMaybe<ContactRequestInput>;
-};
-
-export type MutationCustomerBirthdateUpdateArgs = {
-	birthdate: Scalars['DateTime'];
-};
-
-export type MutationCustomerDeliveryAddressAddArgs = {
-	deliveryAddress?: InputMaybe<DeliveryAddressInput>;
-};
-
-export type MutationCustomerDeliveryAddressDeleteArgs = {
-	deliveryAddressId: Scalars['ID'];
-};
-
-export type MutationCustomerEmailUpdateArgs = {
-	email: Scalars['String'];
-};
-
-export type MutationCustomerInvoiceAddressSetArgs = {
-	invoiceAddress?: InputMaybe<InvoiceAddressInput>;
-};
-
-export type MutationCustomerPasswordChangeArgs = {
-	new: Scalars['String'];
-	old: Scalars['String'];
 };
 
 export type MutationCustomerRegisterArgs = {
@@ -1510,22 +1363,6 @@ export type MutationNewsletterUnsubscribeArgs = {
 export type MutationPlaceOrderArgs = {
 	basketId: Scalars['ID'];
 	confirmTermsAndConditions?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type MutationReviewDeleteArgs = {
-	reviewId: Scalars['ID'];
-};
-
-export type MutationReviewSetArgs = {
-	review: ReviewInput;
-};
-
-export type MutationWishedPriceDeleteArgs = {
-	wishedPriceId: Scalars['ID'];
-};
-
-export type MutationWishedPriceSetArgs = {
-	wishedPrice: WishedPriceInput;
 };
 
 export type NaLanguage = {
@@ -2734,16 +2571,6 @@ export type Query = {
 	 */
 	basket: Basket;
 	/**
-	 *
-	 *
-	 */
-	basketDeliveryMethods: Array<BasketDeliveryMethod>;
-	/**
-	 * Returns all payments that can be used for particular basket.
-	 *
-	 */
-	basketPayments: Array<BasketPayment>;
-	/**
 	 * Argument `owner` will be matched exactly against lastname and / or email
 	 * Query for public baskets by owner.
 	 *
@@ -2794,21 +2621,6 @@ export type Query = {
 	 *
 	 */
 	currency: Currency;
-	/**
-	 *
-	 *
-	 */
-	customer: Customer;
-	/**
-	 *
-	 *
-	 */
-	customerDeliveryAddresses: Array<DeliveryAddress>;
-	/**
-	 *
-	 *
-	 */
-	customerInvoiceAddress: InvoiceAddress;
 	/**
 	 * Returns a list of languages.
 	 *
@@ -2927,14 +2739,6 @@ export type QueryBannerArgs = {
 };
 
 export type QueryBasketArgs = {
-	basketId: Scalars['ID'];
-};
-
-export type QueryBasketDeliveryMethodsArgs = {
-	basketId: Scalars['ID'];
-};
-
-export type QueryBasketPaymentsArgs = {
 	basketId: Scalars['ID'];
 };
 
@@ -3090,12 +2894,6 @@ export type Review = {
 	text: Scalars['String'];
 };
 
-export type ReviewInput = {
-	productId: Scalars['String'];
-	rating?: InputMaybe<Scalars['Int']>;
-	text?: InputMaybe<Scalars['String']>;
-};
-
 export type Reviewer = {
 	__typename?: 'Reviewer';
 	/**
@@ -3202,6 +3000,20 @@ export type Translation = {
 	 *
 	 */
 	value: Scalars['String'];
+};
+
+export type User = {
+	__typename?: 'User';
+	/**
+	 *
+	 *
+	 */
+	email: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
+	id: Scalars['ID'];
 };
 
 export type Vendor = {
@@ -3381,10 +3193,4 @@ export type WishedPrice = {
 	 *
 	 */
 	product: Product;
-};
-
-export type WishedPriceInput = {
-	currencyName: Scalars['String'];
-	price: Scalars['Float'];
-	productId: Scalars['ID'];
 };
