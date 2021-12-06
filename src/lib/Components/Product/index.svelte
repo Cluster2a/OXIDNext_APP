@@ -2,7 +2,6 @@
 	import type { Product as ProductType } from '$lib/generated/graphql';
 
 	export let product: ProductType;
-	console.log(product);
 </script>
 
 <li class="w-64 inline-flex flex-col text-center lg:w-auto">

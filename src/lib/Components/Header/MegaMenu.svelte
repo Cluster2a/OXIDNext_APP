@@ -5,7 +5,7 @@
 
 <div class="ml-8">
 	<div class="h-full flex justify-center space-x-8">
-		{#if categorieTree}
+		{#if categorieTree && categorieTree.length > 0}
 			{#each categorieTree as category}
 				<div class="flex">
 					<div class="group relative relative flex">

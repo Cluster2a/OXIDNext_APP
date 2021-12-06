@@ -146,19 +146,21 @@
 												tabindex="-1"
 											>
 												<div class="py-1" role="none">
-													{#each languages as language}
-														<a
-															sveltekit:prefetch
-															href={`/${language.url}`}
-															class:bg-indigo-600={language.selected}
-															class:text-white={language.selected}
-															class:cursor-not-allowed={language.selected}
-															class:text-gray-700={!language.selected}
-															class:hover:bg-gray-100={!language.selected}
-															class="block px-4 py-2 text-sm"
-															role="menuitem">{language.name}</a
-														>
-													{/each}
+													{#if languages && languages.length > 0}
+														{#each languages as language}
+															<a
+																sveltekit:prefetch
+																href={`/${language.url}`}
+																class:bg-indigo-600={language.selected}
+																class:text-white={language.selected}
+																class:cursor-not-allowed={language.selected}
+																class:text-gray-700={!language.selected}
+																class:hover:bg-gray-100={!language.selected}
+																class="block px-4 py-2 text-sm"
+																role="menuitem">{language.name}</a
+															>
+														{/each}
+													{/if}
 												</div>
 											</div>
 										</div>

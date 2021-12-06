@@ -1,13 +1,69 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-	import { microtime } from '$lib/stores/headerStore';
+<script context="module">
+	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
+	import { browser, dev } from '$app/env';
+	import createUrl from '$lib/utilities/urlCreator';
+	import { getLangIdByPath } from '$lib/utilities/language';
+	import { createClient } from '$lib/graphql';
 
-	onMount(async () => {
-		const currentTime = Date.now();
-		$microtime = currentTime;
-	});
+	export async function load({ fetch, page }) {
+		const url = createUrl(page.path, page.query);
+		const langId = getLangIdByPath(url);
+
+		const client = await createClient({
+			url: GRAPHQL_ENDPOINT,
+			fetch,
+			dev: browser && dev
+		});
+
+		const query = `query($langId: Int!, $url: String!) {
+			languages(langId: $langId, url: $url){
+				id,
+				name,
+				abbr,
+				selected,
+				url
+			},
+			categorieTree(langId: $langId){
+				title
+				id
+				link
+				subCategories {
+					title
+					id
+					link
+				}
+			} 
+		}`;
+
+		const result = await client.query(query, { url, langId }).toPromise();
+
+		return {
+			props: {
+				objectBySeoUrl: result?.data?.objectBySeoUrl,
+				categorieTree: result?.data?.categorieTree,
+				languages: result?.data?.languages,
+				graphQLError: typeof result?.error !== 'undefined'
+			}
+		};
+	}
 </script>
 
+<script lang="ts">
+	import Header from '$lib/Components/Header/index.svelte';
+	import Footer from '$lib/Components/Footer/index.svelte';
+	import type {
+		Common as CommonType,
+		CategoryTree as CategoryTreeType,
+		Language as LanguageType
+	} from '$lib/generated/graphql';
+
+	export let objectBySeoUrl: CommonType;
+	export let categorieTree: CategoryTreeType[];
+	export let languages: LanguageType[];
+	export let graphQLError: boolean;
+</script>
+
+<Header {categorieTree} {languages} />
 <main>
 	<!-- Hero -->
 	<div class="masterhead flex flex-col border-b w-full h-screen lg:border-0">
@@ -17,7 +73,7 @@
 					class="w-full h-full absolute"
 					style="background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2));"
 				/>
-				<img src="/background.webp" class="w-full h-full object-cover top-0 left-0 abbsolute" />
+				<img src="/img/background.webp" class="w-full h-full object-cover top-0 left-0 abbsolute" />
 			</div>
 			<div class="relative bg-gray-900 lg:bg-transparent">
 				<div class="max-w-7xl z-10 mx-auto px-4 sm:px-6 lg:px-8 lg:grid lg:grid-cols-2">
@@ -35,9 +91,10 @@
 							</p>
 							<div class="mt-6">
 								<a
-									href="#"
+									sveltekit:prefetch
+									href="startseite/"
 									class="inline-block bg-indigo-600 border border-transparent py-3 px-8 font-medium text-white hover:bg-indigo-700"
-									>Shop Productivity</a
+									>Zum Shop</a
 								>
 							</div>
 						</div>
@@ -194,6 +251,4 @@
 		</div>
 	</section>
 </main>
-
-<style>
-</style>
+<Footer />
