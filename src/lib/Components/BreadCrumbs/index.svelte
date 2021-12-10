@@ -1,11 +1,16 @@
 <script lang="ts">
 	import type { BreadCrumbs } from '$lib/generated/graphql';
 	export let breadCrumbs: BreadCrumbs[];
+	export let hasPreviewImage: boolean;
 </script>
 
 <section aria-labelledby="breadcrumbs" class="bg-white">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="max-w-2xl mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">
+		<div
+			class:pt-8={hasPreviewImage}
+			class:pt-24={!hasPreviewImage}
+			class="max-w-2xl mx-auto lg:max-w-none pb-8"
+		>
 			{#if breadCrumbs && breadCrumbs.length > 0}
 				<ol
 					class="list-reset flex text-grey-dark"
@@ -13,7 +18,7 @@
 					itemtype="http://schema.org/BreadcrumbList"
 				>
 					<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-						<a href="/" title="Home" itemprop="item"
+						<a sveltekit:prefetch href="/" title="Home" itemprop="item"
 							><span itemprop="name">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -35,8 +40,11 @@
 					<li><span class="mx-2">/</span></li>
 					{#each breadCrumbs as bredcrumb, i}
 						<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-							<a href={bredcrumb.link} title={bredcrumb.title} itemprop="item"
-								><span itemprop="name">{bredcrumb.title}</span></a
+							<a
+								sveltekit:prefetch
+								href={`/${bredcrumb.link}`}
+								title={bredcrumb.title}
+								itemprop="item"><span itemprop="name">{bredcrumb.title}</span></a
 							>
 						</li>
 						{#if i + 1 < breadCrumbs.length}

@@ -40,7 +40,33 @@
 				bredcrumbs {
 					link
 					title
-    			} 
+    			}
+				article {
+					id
+					title
+					shortDescription
+					shortLink
+					ratingAverage
+					variantSelections {
+						label
+							list {
+							name
+							value
+							active
+							disabled
+						}
+					} 
+					formattedPrice
+					imageGallery {
+						images {
+							image
+							icon
+							zoom
+						}
+						icon
+						thumb
+					} 
+				}
 				category {
 					id
 					title
@@ -52,6 +78,7 @@
 						shortDescription
 						shortLink
 						thumbnail
+						icon
 						seo {
 							description
 							keywords
@@ -63,6 +90,7 @@
 						title
 						shortDescription
 						shortLink
+						formattedPrice
 						imageGallery {
 							images {
 								image
@@ -71,14 +99,7 @@
 							}
 							icon
 							thumb
-						} 
-						price {
-							currency {
-								name
-								sign
-							}
-							price
-						} 
+						}
 					}
         		}
     		} 
@@ -101,6 +122,7 @@
 	import { onMount } from 'svelte';
 	import { microtime } from '$lib/stores/headerStore';
 	import Category from '$lib/Components/Category/index.svelte';
+	import Product from '$lib/Components/Product/index.svelte';
 	import ConnectionError from '$lib/Components/Errors/ConnectionError.svelte';
 	import Header from '$lib/Components/Header/index.svelte';
 	import Footer from '$lib/Components/Footer/index.svelte';
@@ -139,6 +161,10 @@
 		<main>
 			{#if objectBySeoUrl?.category}
 				<Category category={objectBySeoUrl.category} breadCrumbs={objectBySeoUrl.bredcrumbs} />
+			{/if}
+
+			{#if objectBySeoUrl?.article}
+				<Product article={objectBySeoUrl.article} breadCrumbs={objectBySeoUrl.bredcrumbs} />
 			{/if}
 		</main>
 		<Footer />

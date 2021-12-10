@@ -36,13 +36,13 @@
 	</div>
 {/if}
 
-<BreadCrumbs {breadCrumbs} />
+<BreadCrumbs {breadCrumbs} hasPreviewImage={category?.previewImage.length > 0} />
 
 {#if category && category?.children && category.children.length > 0}
 	<!-- Collections -->
 	<section aria-labelledby="collections-heading" class="bg-white">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="max-w-2xl mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">
+			<div class="max-w-2xl mx-auto lg:max-w-none">
 				<div class="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-6">
 					{#each category.children as childCategory}
 						<a sveltekit:prefetch href={`/${childCategory.shortLink}`}>
@@ -51,12 +51,12 @@
 									class="card-zoom flex rounded-md items-center justify-center relative overflow-hidden w-full shadow-xl h-60 h-80 bg-white overflow-hidden sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"
 								>
 									<div
-										class="card-zoom-image absolute w-full h-full transition-all duration-500 ease-in-out transform bg-center bg-cover"
-										style="background-image: url('{childCategory.thumbnail}');"
+										class="card-zoom-image transition-transform duration-300 absolute w-full h-full bg-center bg-cover"
+										style="background-image: url('{childCategory.icon}');"
 									/>
 
 									<h1
-										class="card-zoom-text absolute text-3xl font-black transition-all duration-500 ease-in-out transform scale-150 text-gray-50 opacity-60"
+										class="absolute rounded-md bg-black px-2 text-3xl font-black text-gray-50 opacity-60"
 									>
 										{childCategory.title}
 									</h1>
@@ -76,10 +76,6 @@
 
 <style>
 	.card-zoom:hover .card-zoom-image {
-		scale: 150%;
 		transform: scale(1.4);
-	}
-	.card-zoom:hover .card-zoom-text {
-		transform: scale(1);
 	}
 </style>

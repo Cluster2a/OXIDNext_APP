@@ -2128,6 +2128,11 @@ export type Product = {
 	 *
 	 *
 	 */
+	formattedPrice: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
 	freeShipping: Scalars['Boolean'];
 	/**
 	 *
@@ -2179,6 +2184,11 @@ export type Product = {
 	 *
 	 */
 	rating: ProductRating;
+	/**
+	 *
+	 *
+	 */
+	ratingAverage: Scalars['Float'];
 	/**
 	 *
 	 *
@@ -2244,6 +2254,11 @@ export type Product = {
 	 *
 	 */
 	variantLabels: Array<Scalars['String']>;
+	/**
+	 *
+	 *
+	 */
+	variantSelections: Array<VariantSelection>;
 	/**
 	 *
 	 *
@@ -3014,6 +3029,44 @@ export type User = {
 	 *
 	 */
 	id: Scalars['ID'];
+};
+
+export type VariantSelection = {
+	__typename?: 'VariantSelection';
+	/**
+	 *
+	 *
+	 */
+	label: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
+	list: Array<VariantSelectionList>;
+};
+
+export type VariantSelectionList = {
+	__typename?: 'VariantSelectionList';
+	/**
+	 *
+	 *
+	 */
+	active: Scalars['Boolean'];
+	/**
+	 *
+	 *
+	 */
+	disabled: Scalars['Boolean'];
+	/**
+	 *
+	 *
+	 */
+	name: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
+	value: Scalars['String'];
 };
 
 export type Vendor = {
