@@ -47,13 +47,25 @@
 					shortDescription
 					shortLink
 					ratingAverage
-					variantSelections {
-						label
+					varSelection
+					sku
+					isBuyable
+					variantSelection {
+						selectedVariant
+						variants {
+							label
 							list {
-							name
-							value
-							active
-							disabled
+								name
+								value
+								active
+								disabled
+							}
+							activeSelection {
+								name
+								value
+								active
+								disabled
+							}
 						}
 					} 
 					formattedPrice
@@ -104,7 +116,6 @@
         		}
     		} 
 		}`;
-
 		const result = await client.query(query, { url, langId }).toPromise();
 
 		return {

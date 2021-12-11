@@ -3,50 +3,73 @@
 	import { createClient } from '$lib/graphql';
 	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
 	import { browser, dev } from '$app/env';
-	export let variantSelections: VariantSelectionType[];
+	export let variantSelection: VariantSelectionType;
 	export let productId: string;
+	export let newVariant: string | null;
+	export let loadingVariant: boolean;
+
+	let tmpVariantSelection = variantSelection;
 
 	let selectedVariants = [];
 	let blockSelections = false;
 
-	for (let index = 0; index < variantSelections.length; index++) {
-		selectedVariants[index] = '';
+	for (let index = 0; index < variantSelection.variants.length; index++) {
+		selectedVariants[index] = {
+			variant: ''
+		};
 	}
 
 	const selectVariant = async (id: number, variant: string): Promise<void> => {
-		selectedVariants[id] = variant;
-
+		if (selectedVariants[id].variant === variant) {
+			selectedVariants[id].variant = '';
+		} else {
+			selectedVariants[id].variant = variant;
+		}
 		updateVariant();
 	};
 
 	const updateVariant = async (): Promise<void> => {
 		blockSelections = true;
+		loadingVariant = true;
 		const client = await createClient({
 			url: GRAPHQL_ENDPOINT,
 			fetch,
 			dev: browser && dev
 		});
 
-		const query = `query($productId: ID!) {
-			product(productId: $productId){
-                variantSelections {
-                    label
-                        list {
-                        name
-                        value
-                        active
-                        disabled
-                    }
-                } 
+		const query = `query($productId: ID!, $selectedVariants: [SelectedVariants!]) {
+			product(productId: $productId, selectedVariants: $selectedVariants){
+				variantSelection {
+					selectedVariant
+					variants {
+						label
+						list {
+							name
+							value
+							active
+							disabled
+						}
+						activeSelection {
+							name
+							value
+							active
+							disabled
+						}
+					}
+				} 
     		} 
 		}`;
 
-		const result = await client.query(query, { productId }).toPromise();
+		const result = await client.query(query, { productId, selectedVariants }).toPromise();
+		variantSelection = result.data.product.variantSelection;
+		tmpVariantSelection = variantSelection;
+		newVariant = variantSelection?.selectedVariant;
 		blockSelections = false;
+		loadingVariant = false;
 	};
 </script>
 
-{#each variantSelections as variantSelection, i}
+{#each tmpVariantSelection.variants as variantSelection, i}
 	<div>
 		<h2 class="text-sm font-medium text-gray-900 mt-6">{variantSelection.label}</h2>
 
@@ -54,24 +77,26 @@
 			<legend class="sr-only"> Choose a size </legend>
 			<div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
 				{#each variantSelection.list as listItem}
-					<!--
-  In Stock: "cursor-pointer", Out of Stock: "opacity-25 cursor-not-allowed"
-  Active: "ring-2 ring-offset-2 ring-indigo-500"
-  Checked: "bg-indigo-600 border-transparent text-white hover:bg-indigo-700", Not Checked: "bg-white border-gray-200 text-gray-900 hover:bg-gray-50"
--->
 					<label
-						class:cursor-not-allowed={blockSelections}
-						class:cursor-pointer={!blockSelections}
-						class:opacity-50={blockSelections}
-						on:click|preventDefault={() => selectVariant(i, listItem.value)}
+						class:ring-indigo-500={listItem.active}
+						class:bg-indigo-600={listItem.active}
+						class:text-white={listItem.active}
+						class:hover:bg-indigo-700={listItem.active}
+						class:border-gray-200={!listItem.active}
+						class:text-gray-900={!listItem.active}
+						class:hover:bg-gray-50={!listItem.active}
+						class:cursor-not-allowed={blockSelections || listItem.disabled}
+						class:cursor-pointer={!blockSelections && !listItem.disabled}
+						class:opacity-50={blockSelections || listItem.disabled}
 						class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 focus:outline-none"
 					>
 						<input
-							disabled={blockSelections}
+							disabled={blockSelections || listItem.disabled}
 							type="radio"
 							name="size-choice"
 							value={listItem.value}
 							class="sr-only"
+							on:click|preventDefault={() => selectVariant(i, listItem.value)}
 							aria-labelledby="size-choice-2-label"
 						/>
 						<p id="size-choice-2-label">{listItem.name}</p>

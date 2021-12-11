@@ -3,12 +3,65 @@
 		BreadCrumbs as BreadCrumbsType,
 		Product as ProductType
 	} from '$lib/generated/graphql';
+	import { browser, dev } from '$app/env';
+	import { createClient } from '$lib/graphql';
 	import BreadCrumbs from '$lib/Components/BreadCrumbs/index.svelte';
 	import Reviews from './inc/Reviews.svelte';
 	import ShortDescription from './inc/ShortDescription.svelte';
 	import VariantSelection from './inc/VariantSelection.svelte';
+	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
 	export let article: ProductType;
 	export let breadCrumbs: BreadCrumbsType[];
+
+	let mainProduct = article.id;
+	let loadingVariant = false;
+
+	let newVariant: string | null = null;
+
+	$: {
+		if (newVariant !== null) {
+			getVariant(newVariant);
+		} else {
+			getVariant(mainProduct);
+		}
+	}
+
+	const getVariant = async (variant: string): Promise<void> => {
+		const client = await createClient({
+			url: GRAPHQL_ENDPOINT,
+			fetch,
+			dev: browser && dev
+		});
+
+		const query = `query($productId: ID!) {
+			product(productId: $productId){
+				title
+				varSelection
+				imageGallery {
+					images {
+						image
+						icon
+						zoom
+					}
+					icon
+					thumb
+				} 
+				shortDescription
+				formattedPrice
+				sku
+				isBuyable
+    		} 
+		}`;
+
+		const result = await client.query(query, { productId: variant }).toPromise();
+		article.varSelection = result.data.product.varSelection;
+		article.title = result.data.product.title;
+		article.imageGallery = result.data.product.imageGallery;
+		article.shortDescription = result.data.product.shortDescription;
+		article.formattedPrice = result.data.product.formattedPrice;
+		article.sku = result.data.product.sku;
+		article.isBuyable = result.data.product.isBuyable;
+	};
 </script>
 
 <BreadCrumbs {breadCrumbs} hasPreviewImage={false} />
@@ -60,7 +113,11 @@
 
 		<!-- Product info -->
 		<div class="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-			<h1 class="text-3xl font-extrabold tracking-tight text-gray-900">{article.title}</h1>
+			<h1 class="text-3xl font-extrabold tracking-tight text-gray-900">
+				{article.title}
+				{article.varSelection}
+			</h1>
+			<div>{article.sku}</div>
 
 			<div class="mt-3">
 				<h2 class="sr-only">Product information</h2>
@@ -75,10 +132,18 @@
 
 			<form class="mt-6">
 				<!-- VariantSelection -->
-				<VariantSelection variantSelections={article.variantSelections} productId={article.id} />
+				<VariantSelection
+					bind:loadingVariant
+					bind:newVariant
+					variantSelection={article.variantSelection}
+					productId={article.id}
+				/>
 
 				<div class="mt-10 flex sm:flex-col1">
 					<button
+						disabled={!article.isBuyable || loadingVariant}
+						class:cursor-not-allowed={!article.isBuyable || loadingVariant}
+						class:opacity-50={!article.isBuyable || loadingVariant}
 						type="submit"
 						class="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
 						>Add to bag</button

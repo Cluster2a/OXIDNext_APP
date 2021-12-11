@@ -2153,6 +2153,11 @@ export type Product = {
 	 *
 	 *
 	 */
+	isBuyable: Scalars['Boolean'];
+	/**
+	 *
+	 *
+	 */
 	listPrice?: Maybe<Price>;
 	/**
 	 *
@@ -2253,12 +2258,17 @@ export type Product = {
 	 *
 	 *
 	 */
+	varSelection: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
 	variantLabels: Array<Scalars['String']>;
 	/**
 	 *
 	 *
 	 */
-	variantSelections: Array<VariantSelection>;
+	variantSelection: VariantSelection;
 	/**
 	 *
 	 *
@@ -2818,11 +2828,13 @@ export type QueryManufacturersArgs = {
 };
 
 export type QueryObjectBySeoUrlArgs = {
+	selectedVariants?: InputMaybe<Array<SelectedVariants>>;
 	url: Scalars['String'];
 };
 
 export type QueryProductArgs = {
 	productId: Scalars['ID'];
+	selectedVariants?: InputMaybe<Array<SelectedVariants>>;
 };
 
 export type QueryProductsArgs = {
@@ -2916,6 +2928,10 @@ export type Reviewer = {
 	 *
 	 */
 	firstName: Scalars['String'];
+};
+
+export type SelectedVariants = {
+	variant: Scalars['String'];
 };
 
 export type Selection = {
@@ -3031,22 +3047,8 @@ export type User = {
 	id: Scalars['ID'];
 };
 
-export type VariantSelection = {
-	__typename?: 'VariantSelection';
-	/**
-	 *
-	 *
-	 */
-	label: Scalars['String'];
-	/**
-	 *
-	 *
-	 */
-	list: Array<VariantSelectionList>;
-};
-
-export type VariantSelectionList = {
-	__typename?: 'VariantSelectionList';
+export type VariantList = {
+	__typename?: 'VariantList';
 	/**
 	 *
 	 *
@@ -3067,6 +3069,39 @@ export type VariantSelectionList = {
 	 *
 	 */
 	value: Scalars['String'];
+};
+
+export type VariantSelection = {
+	__typename?: 'VariantSelection';
+	/**
+	 *
+	 *
+	 */
+	selectedVariant?: Maybe<Scalars['String']>;
+	/**
+	 *
+	 *
+	 */
+	variants: Array<Variants>;
+};
+
+export type Variants = {
+	__typename?: 'Variants';
+	/**
+	 *
+	 *
+	 */
+	activeSelection?: Maybe<VariantList>;
+	/**
+	 *
+	 *
+	 */
+	label: Scalars['String'];
+	/**
+	 *
+	 *
+	 */
+	list: Array<VariantList>;
 };
 
 export type Vendor = {
