@@ -16,6 +16,7 @@
 		});
 
 		const query = `query($langId: Int!, $url: String!) {
+			
 			languages(langId: $langId, url: $url){
 				id,
 				name,

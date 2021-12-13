@@ -7,6 +7,7 @@
 	import { createClient } from '$lib/graphql';
 	import BreadCrumbs from '$lib/Components/BreadCrumbs/index.svelte';
 	import Reviews from './inc/Reviews.svelte';
+	import AddToBasketSuccess from './inc/AddToBasketSuccess.svelte';
 	import ShortDescription from './inc/ShortDescription.svelte';
 	import VariantSelection from './inc/VariantSelection.svelte';
 	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
@@ -15,10 +16,13 @@
 
 	let mainProduct = article.id;
 	let loadingVariant = false;
+	let showAddToCartModal = false;
 
 	let newVariant: string | null = null;
 
-	$: {
+	$: recalculateVariant(newVariant);
+
+	function recalculateVariant(newVariant) {
 		if (newVariant !== null) {
 			getVariant(newVariant);
 		} else {
@@ -32,7 +36,6 @@
 			fetch,
 			dev: browser && dev
 		});
-
 		const query = `query($productId: ID!) {
 			product(productId: $productId){
 				title
@@ -62,9 +65,28 @@
 		article.sku = result.data.product.sku;
 		article.isBuyable = result.data.product.isBuyable;
 	};
+
+	const addToBasket = async (): Promise<void> => {
+		const res = await fetch('/api/basket/add.json', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ productId: article.id, qty: 1 })
+		});
+
+		if (res.ok) {
+			showAddToCartModal = true;
+		}
+	};
 </script>
 
 <BreadCrumbs {breadCrumbs} hasPreviewImage={false} />
+
+{#if showAddToCartModal === true}
+	<AddToBasketSuccess bind:showAddToCartModal />
+{/if}
 
 <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 	<div class="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
@@ -130,12 +152,12 @@
 			<!-- ShortDescription -->
 			<ShortDescription shortDescription={article.shortDescription} />
 
-			<form class="mt-6">
+			<form class="mt-6" on:submit|preventDefault={() => addToBasket()}>
 				<!-- VariantSelection -->
 				<VariantSelection
 					bind:loadingVariant
 					bind:newVariant
-					variantSelection={article.variantSelection}
+					variants={article.variantSelection}
 					productId={article.id}
 				/>
 

@@ -2,18 +2,19 @@
 	import type { VariantSelection as VariantSelectionType } from '$lib/generated/graphql';
 	import { createClient } from '$lib/graphql';
 	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
+
 	import { browser, dev } from '$app/env';
-	export let variantSelection: VariantSelectionType;
+	export let variants: VariantSelectionType;
 	export let productId: string;
 	export let newVariant: string | null;
 	export let loadingVariant: boolean;
 
-	let tmpVariantSelection = variantSelection;
+	let tmpVariants = variants;
 
 	let selectedVariants = [];
 	let blockSelections = false;
 
-	for (let index = 0; index < variantSelection.variants.length; index++) {
+	for (let index = 0; index < variants.variants.length; index++) {
 		selectedVariants[index] = {
 			variant: ''
 		};
@@ -38,38 +39,36 @@
 		});
 
 		const query = `query($productId: ID!, $selectedVariants: [SelectedVariants!]) {
-			product(productId: $productId, selectedVariants: $selectedVariants){
-				variantSelection {
-					selectedVariant
-					variants {
-						label
-						list {
-							name
-							value
-							active
-							disabled
-						}
-						activeSelection {
-							name
-							value
-							active
-							disabled
-						}
+			variants(productId: $productId, selectedVariants: $selectedVariants){
+				selectedVariant
+				variants {
+					label
+					list {
+						name
+						value
+						active
+						disabled
 					}
-				} 
+					activeSelection {
+						name
+						value
+						active
+						disabled
+					}
+				}
     		} 
 		}`;
 
 		const result = await client.query(query, { productId, selectedVariants }).toPromise();
-		variantSelection = result.data.product.variantSelection;
-		tmpVariantSelection = variantSelection;
-		newVariant = variantSelection?.selectedVariant;
+		variants = result.data.variants;
+		tmpVariants = result.data.variants;
+		newVariant = result.data.variants.selectedVariant;
 		blockSelections = false;
 		loadingVariant = false;
 	};
 </script>
 
-{#each tmpVariantSelection.variants as variantSelection, i}
+{#each tmpVariants.variants as variantSelection, i}
 	<div>
 		<h2 class="text-sm font-medium text-gray-900 mt-6">{variantSelection.label}</h2>
 

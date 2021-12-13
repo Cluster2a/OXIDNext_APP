@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script context="module">
 	export async function load({ fetch, page }) {
 		await fetch('/api/user/login.json', {
 			method: 'POST',
@@ -6,15 +6,9 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ email: null, password: null, page: page.host })
+			body: JSON.stringify({ email: 'null', password: 'null' })
 		});
 
 		return {};
 	}
 </script>
-
-<script lang="ts">
-	import 'virtual:windi.css';
-</script>
-
-<slot />
