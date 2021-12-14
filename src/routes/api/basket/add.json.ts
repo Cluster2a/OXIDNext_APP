@@ -59,6 +59,7 @@ export const addToUserBasket = async (
     `;
 
 	const result = await client.mutation(query, { basketId, productId, amount }).toPromise();
+	console.log(result);
 	return result.data.basketAddItem.id;
 };
 
@@ -86,6 +87,9 @@ export async function post(request) {
 	request.locals.basketId = basketId;
 
 	return {
-		status: 200
+		status: 200,
+		body: {
+			itemAmount: qty
+		}
 	};
 }

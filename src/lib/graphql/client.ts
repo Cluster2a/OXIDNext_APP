@@ -25,11 +25,12 @@ export async function createClient({
 		// conditionally upgrade cache-first and cache-only operations to use cache-and-network,
 		// so that the client gets an opportunity to update its cached data, when the operation
 		// hasn't been seen within the given ttl time.
-		requestPolicyExchange({
-			// 3 minutes
-			ttl: 3 * 60 * 1000
-		}),
-		cacheExchange,
+		//requestPolicyExchange({
+		//	// 3 minutes
+		//	ttl: 3 * 60 * 1000
+		//}),
+		//cacheExchange,
+		// ToDo: check caching
 		fetchExchange
 	];
 

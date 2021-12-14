@@ -1,16 +1,17 @@
 <script lang="ts">
-	import type { VariantSelection as VariantSelectionType } from '$lib/generated/graphql';
-	import { createClient } from '$lib/graphql';
-	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
+	import type {
+		VariantSelection as VariantSelectionType,
+		Query as QueryType
+	} from '$lib/generated/graphql';
+	import { createEventDispatcher } from 'svelte';
 
-	import { browser, dev } from '$app/env';
 	export let variants: VariantSelectionType;
 	export let productId: string;
-	export let newVariant: string | null;
 	export let loadingVariant: boolean;
 
-	let tmpVariants = variants;
+	const dispatch = createEventDispatcher();
 
+	let tmpVariants = variants;
 	let selectedVariants = [];
 	let blockSelections = false;
 
@@ -30,45 +31,29 @@
 	};
 
 	const updateVariant = async (): Promise<void> => {
-		blockSelections = true;
 		loadingVariant = true;
-		const client = await createClient({
-			url: GRAPHQL_ENDPOINT,
-			fetch,
-			dev: browser && dev
+		const res = await fetch('/api/product/variants.json', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ productId, selectedVariants })
 		});
 
-		const query = `query($productId: ID!, $selectedVariants: [SelectedVariants!]) {
-			variants(productId: $productId, selectedVariants: $selectedVariants){
-				selectedVariant
-				variants {
-					label
-					list {
-						name
-						value
-						active
-						disabled
-					}
-					activeSelection {
-						name
-						value
-						active
-						disabled
-					}
-				}
-    		} 
-		}`;
+		const result: QueryType = await res.json();
+		variants = result.variants;
+		tmpVariants = result.variants;
 
-		const result = await client.query(query, { productId, selectedVariants }).toPromise();
-		variants = result.data.variants;
-		tmpVariants = result.data.variants;
-		newVariant = result.data.variants.selectedVariant;
+		dispatch('variantChanged', {
+			currentVariant: result.variants.selectedVariant
+		});
+
 		blockSelections = false;
-		loadingVariant = false;
 	};
 </script>
 
-{#each tmpVariants.variants as variantSelection, i}
+{#each variants.variants as variantSelection, i}
 	<div>
 		<h2 class="text-sm font-medium text-gray-900 mt-6">{variantSelection.label}</h2>
 

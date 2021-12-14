@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import LogoLGPlus from '$lib/Components/Header/LogoLGPlus.svelte';
 	import LogoLGMinus from '$lib/Components/Header/LogoLGMinus.svelte';
@@ -12,6 +12,8 @@
 
 	import type { CategorieTree } from '$lib/types/categorieTree';
 	import type { Languages } from '$lib/types/languages';
+
+	const dispatch = createEventDispatcher();
 
 	export let categorieTree: CategorieTree[];
 	export let languages: Languages[];
@@ -41,6 +43,12 @@
 			calculateScroll();
 		}
 	});
+
+	const openOffCanvasBasket = async (): Promise<void> => {
+		dispatch('offCanvasBasketOpen', {
+			itemAmount: 0
+		});
+	};
 
 	onMount(async () => {
 		calculateScroll();
@@ -244,8 +252,8 @@
 									<div class="flex">
 										<div class="group relative flex">
 											<!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-
 											<button
+												on:click|preventDefault={() => openOffCanvasBasket()}
 												type="button"
 												class="border-transparent outline-none focus:outline-none text-white hover:text-gray-500 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
 												aria-expanded="true"
@@ -268,39 +276,6 @@
 												</svg>
 												<span class="sr-only">items in cart, view bag</span>
 											</button>
-
-											<div
-												class="mt-16 opacity-0 hidden group-hover:opacity-100 group-hover:block origin-top-left absolute left-0 w-56 shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-												role="menu"
-												aria-orientation="vertical"
-												aria-labelledby="menu-button"
-												tabindex="-1"
-											>
-												<div class="py-1" role="none">
-													<!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-													<a
-														href="#"
-														class="text-gray-700 block px-4 py-2 text-sm"
-														role="menuitem"
-														tabindex="-1"
-														id="menu-item-0">Account settings</a
-													>
-													<a
-														href="#"
-														class="text-gray-700 block px-4 py-2 text-sm"
-														role="menuitem"
-														tabindex="-1"
-														id="menu-item-1">Support</a
-													>
-													<a
-														href="#"
-														class="text-gray-700 block px-4 py-2 text-sm"
-														role="menuitem"
-														tabindex="-1"
-														id="menu-item-2">License</a
-													>
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>

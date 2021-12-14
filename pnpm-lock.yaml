@@ -32,13 +32,13 @@ specifiers:
   prettier-plugin-svelte: ^2.5.1
   svelte: ^3.44.2
   svelte-check: ^2.2.10
-  svelte-preprocess: ^4.9.8
+  svelte-preprocess: ^4.10.0
   symlink-dir: ^5.0.1
   tslib: ^2.3.1
   typescript: ^4.5.3
   uuid: ^8.3.2
   vite-plugin-windicss: ^1.5.4
-  windicss: ^3.2.1
+  windicss: ^3.3.0
 
 dependencies:
   '@fontsource/lato': 4.5.0
@@ -75,12 +75,12 @@ devDependencies:
   prettier-plugin-svelte: 2.5.1_prettier@2.5.1+svelte@3.44.2
   svelte: 3.44.2
   svelte-check: 2.2.10_svelte@3.44.2
-  svelte-preprocess: 4.9.8_svelte@3.44.2+typescript@4.5.3
+  svelte-preprocess: 4.10.0_svelte@3.44.2+typescript@4.5.3
   symlink-dir: 5.0.1
   tslib: 2.3.1
   typescript: 4.5.3
   vite-plugin-windicss: 1.5.4
-  windicss: 3.2.1
+  windicss: 3.3.0
 
 packages:
   /@antfu/utils/0.3.0:
@@ -2193,7 +2193,7 @@ packages:
     dependencies:
       debug: 4.3.3
       jiti: 1.12.9
-      windicss: 3.2.1
+      windicss: 3.3.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2210,7 +2210,7 @@ packages:
       fast-glob: 3.2.7
       magic-string: 0.25.7
       micromatch: 4.0.4
-      windicss: 3.2.1
+      windicss: 3.3.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -7853,7 +7853,7 @@ packages:
       sade: 1.7.4
       source-map: 0.7.3
       svelte: 3.44.2
-      svelte-preprocess: 4.9.8_svelte@3.44.2+typescript@4.5.3
+      svelte-preprocess: 4.10.0_svelte@3.44.2+typescript@4.5.3
       typescript: 4.5.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -7879,10 +7879,10 @@ packages:
       svelte: 3.44.2
     dev: true
 
-  /svelte-preprocess/4.9.8_svelte@3.44.2+typescript@4.5.3:
+  /svelte-preprocess/4.10.0_svelte@3.44.2+typescript@4.5.3:
     resolution:
       {
-        integrity: sha512-EQS/oRZzMtYdAprppZxY3HcysKh11w54MgA63ybtL+TAZ4hVqYOnhw41JVJjWN9dhPnNjjLzvbZ2tMhTsla1Og==
+        integrity: sha512-uZgGyC4SwkFoby2ceiMgGYs4qHYGz2fT06cAsHO8FHdDbvj1dKQyQ/fD9OB0KLymVv0fmzuJo/On7Kv7AeVhWA==
       }
     engines: { node: '>= 9.11.2' }
     requiresBuild: true
@@ -7898,7 +7898,7 @@ packages:
       stylus: ^0.54.7
       sugarss: ^2.0.0
       svelte: ^3.23.0
-      typescript: ^3.9.5 || ^4.0.0
+      typescript: ^4.5.2
     peerDependenciesMeta:
       '@babel/core':
         optional: true
@@ -8348,7 +8348,7 @@ packages:
       '@windicss/plugin-utils': 1.5.4
       debug: 4.3.3
       kolorist: 1.5.0
-      windicss: 3.2.1
+      windicss: 3.3.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8497,10 +8497,10 @@ packages:
       string-width: 4.2.3
     dev: true
 
-  /windicss/3.2.1:
+  /windicss/3.3.0:
     resolution:
       {
-        integrity: sha512-LusrIrryBFHAPQ/OOTbS4EWWuzI6eGeJglI9nQ3kDBr1cqH69NWt8Z8q59f9kTkgptXroejmWfksWwqgHs8EVw==
+        integrity: sha512-LxA9iCPEe4lBbC5MGLo6g1gbJxYlTXpDCLJRaHo0EcEN6X0ki26hunOJWGcBvO9qz1r/ead1L7wS5MkSoOCIZQ==
       }
     engines: { node: '>= 12' }
     hasBin: true

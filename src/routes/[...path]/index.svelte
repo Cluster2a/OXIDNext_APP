@@ -1,142 +1,28 @@
-<script context="module">
-	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
-	import { browser, dev } from '$app/env';
+<script context="module" lang="ts">
+	import { browser } from '$app/env';
 	import createUrl from '$lib/utilities/urlCreator';
 	import { getLangIdByPath } from '$lib/utilities/language';
-	import { createClient } from '$lib/graphql';
 
-	export async function load({ fetch, page, session }) {
-		let authToken = null;
-
-		if (
-			session &&
-			Object.keys(session).length !== 0 &&
-			Object.getPrototypeOf(session) !== Object.prototype
-		) {
-			authToken = session.get('authToken');
-		}
-
+	export async function load({ fetch, page }) {
 		const url = createUrl(page.path, page.query);
 		const langId = getLangIdByPath(url);
 
-		const client = await createClient({
-			url: GRAPHQL_ENDPOINT,
-			fetch,
-			dev: browser && dev,
-			fetchOptions: () => {
-				return authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {};
-			}
+		const res = await fetch('/api/common.json', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ url: url, langId: langId })
 		});
 
-		const query = `query($langId: Int!, $url: String!) {
-			languages(langId: $langId, url: $url){
-				id,
-				name,
-				abbr,
-				selected,
-				url
-			},
-			categorieTree(langId: $langId){
-				title
-				id
-				link
-				subCategories {
-					title
-					id
-					link
-				}
-			},
-			objectBySeoUrl(url: $url){
-				type
-				id
-				lang
-				bredcrumbs {
-					link
-					title
-    			}
-				article {
-					id
-					title
-					shortDescription
-					shortLink
-					ratingAverage
-					varSelection
-					sku
-					isBuyable
-					variantSelection {
-						selectedVariant
-						variants {
-							label
-							list {
-								name
-								value
-								active
-								disabled
-							}
-							activeSelection {
-								name
-								value
-								active
-								disabled
-							}
-						}
-					} 
-					formattedPrice
-					imageGallery {
-						images {
-							image
-							icon
-							zoom
-						}
-						icon
-						thumb
-					} 
-				}
-				category {
-					id
-					title
-					shortDescription
-					longDescription
-					previewImage
-					children {
-						title
-						shortDescription
-						shortLink
-						thumbnail
-						icon
-						seo {
-							description
-							keywords
-							url
-						} 
-					}
-					products {
-						id
-						title
-						shortDescription
-						shortLink
-						formattedPrice
-						imageGallery {
-							images {
-								image
-								icon
-								zoom
-							}
-							icon
-							thumb
-						}
-					}
-        		}
-    		} 
-		}`;
-		const result = await client.query(query, { url, langId }).toPromise();
+		const common: QueryType = await res.json();
 
 		return {
 			props: {
-				objectBySeoUrl: result?.data?.objectBySeoUrl,
-				categorieTree: result?.data?.categorieTree,
-				languages: result?.data?.languages,
-				graphQLError: typeof result?.error !== 'undefined'
+				objectBySeoUrl: common.objectBySeoUrl,
+				categorieTree: common?.categorieTree,
+				languages: common?.languages
 			}
 		};
 	}
@@ -150,16 +36,21 @@
 	import ConnectionError from '$lib/Components/Errors/ConnectionError.svelte';
 	import Header from '$lib/Components/Header/index.svelte';
 	import Footer from '$lib/Components/Footer/index.svelte';
+	import OffCanvasBasket from '$lib/Components/OffCanvasBasket/index.svelte';
 	import type {
-		Common as CommonType,
 		CategoryTree as CategoryTreeType,
-		Language as LanguageType
+		Language as LanguageType,
+		Common as CommonType,
+		Query as QueryType
 	} from '$lib/generated/graphql';
 
 	export let objectBySeoUrl: CommonType;
 	export let categorieTree: CategoryTreeType[];
 	export let languages: LanguageType[];
 	export let graphQLError: boolean;
+
+	let showOffCanvasBasket = false;
+	let itemAmount = 0;
 
 	function fetchLessonData(objectBySeoUrl: CommonType) {
 		if (browser) {
@@ -174,6 +65,11 @@
 
 	$: fetchLessonData(objectBySeoUrl);
 
+	const openOffCanvasBasket = async (event: CustomEvent): Promise<void> => {
+		itemAmount = event.detail.itemAmount;
+		showOffCanvasBasket = true;
+	};
+
 	onMount(async () => {});
 </script>
 
@@ -181,16 +77,24 @@
 	{#if graphQLError}
 		<ConnectionError />
 	{:else}
-		<Header {categorieTree} {languages} />
+		<Header {categorieTree} {languages} on:offCanvasBasketOpen={(e) => openOffCanvasBasket(e)} />
 		<main>
 			{#if objectBySeoUrl?.category}
 				<Category category={objectBySeoUrl.category} breadCrumbs={objectBySeoUrl.bredcrumbs} />
 			{/if}
 
 			{#if objectBySeoUrl?.article}
-				<Product article={objectBySeoUrl.article} breadCrumbs={objectBySeoUrl.bredcrumbs} />
+				<Product
+					on:offCanvasBasketOpen={(e) => openOffCanvasBasket(e)}
+					article={objectBySeoUrl.article}
+					breadCrumbs={objectBySeoUrl.bredcrumbs}
+				/>
 			{/if}
 		</main>
 		<Footer />
 	{/if}
 </div>
+
+{#if showOffCanvasBasket}
+	<OffCanvasBasket bind:showOffCanvasBasket numberOfNewItemsAdded={itemAmount} />
+{/if}

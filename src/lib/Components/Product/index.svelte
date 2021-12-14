@@ -1,69 +1,65 @@
 <script lang="ts">
 	import type {
 		BreadCrumbs as BreadCrumbsType,
-		Product as ProductType
+		Product as ProductType,
+		Query as QueryType
 	} from '$lib/generated/graphql';
-	import { browser, dev } from '$app/env';
-	import { createClient } from '$lib/graphql';
+	import { createEventDispatcher } from 'svelte';
 	import BreadCrumbs from '$lib/Components/BreadCrumbs/index.svelte';
 	import Reviews from './inc/Reviews.svelte';
 	import AddToBasketSuccess from './inc/AddToBasketSuccess.svelte';
 	import ShortDescription from './inc/ShortDescription.svelte';
 	import VariantSelection from './inc/VariantSelection.svelte';
-	import { GRAPHQL_ENDPOINT } from '$lib/utilities/config';
 	export let article: ProductType;
 	export let breadCrumbs: BreadCrumbsType[];
+
+	const dispatch = createEventDispatcher();
 
 	let mainProduct = article.id;
 	let loadingVariant = false;
 	let showAddToCartModal = false;
+	let itemBasketId = null;
+	let loadedProduct = article.id;
 
-	let newVariant: string | null = null;
-
-	$: recalculateVariant(newVariant);
-
-	function recalculateVariant(newVariant) {
-		if (newVariant !== null) {
-			getVariant(newVariant);
-		} else {
-			getVariant(mainProduct);
-		}
-	}
-
-	const getVariant = async (variant: string): Promise<void> => {
-		const client = await createClient({
-			url: GRAPHQL_ENDPOINT,
-			fetch,
-			dev: browser && dev
+	const getVariant = async (productId: string): Promise<void> => {
+		const res = await fetch('/api/product.json', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ productId })
 		});
-		const query = `query($productId: ID!) {
-			product(productId: $productId){
-				title
-				varSelection
-				imageGallery {
-					images {
-						image
-						icon
-						zoom
-					}
-					icon
-					thumb
-				} 
-				shortDescription
-				formattedPrice
-				sku
-				isBuyable
-    		} 
-		}`;
 
-		const result = await client.query(query, { productId: variant }).toPromise();
-		article.varSelection = result.data.product.varSelection;
-		article.title = result.data.product.title;
-		article.imageGallery = result.data.product.imageGallery;
-		article.shortDescription = result.data.product.shortDescription;
-		article.formattedPrice = result.data.product.formattedPrice;
-		article.sku = result.data.product.sku;
-		article.isBuyable = result.data.product.isBuyable;
+		const result: QueryType = await res.json();
+
+		article.varSelection = result.product.varSelection;
+		article.title = result.product.title;
+		article.imageGallery = result.product.imageGallery;
+		article.shortDescription = result.product.shortDescription;
+		article.formattedPrice = result.product.formattedPrice;
+		article.sku = result.product.sku;
+		article.isBuyable = result.product.isBuyable;
+		article.variantSelection = result.product.variantSelection;
+		itemBasketId = result.product.id;
+	};
+
+	const variantChanged = async (e: CustomEvent) => {
+		const currentVariant = e.detail.currentVariant;
+
+		if (currentVariant !== null) {
+			if (loadedProduct !== currentVariant) {
+				getVariant(currentVariant);
+				loadedProduct = currentVariant;
+			}
+		} else {
+			if (loadedProduct !== mainProduct) {
+				getVariant(mainProduct);
+				loadedProduct = mainProduct;
+			}
+		}
+
+		loadingVariant = false;
 	};
 
 	const addToBasket = async (): Promise<void> => {
@@ -73,11 +69,15 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ productId: article.id, qty: 1 })
+			body: JSON.stringify({ productId: itemBasketId, qty: 1 })
 		});
 
+		const body = await res.json();
+
 		if (res.ok) {
-			showAddToCartModal = true;
+			dispatch('offCanvasBasketOpen', {
+				itemAmount: body.itemAmount
+			});
 		}
 	};
 </script>
@@ -155,17 +155,17 @@
 			<form class="mt-6" on:submit|preventDefault={() => addToBasket()}>
 				<!-- VariantSelection -->
 				<VariantSelection
+					on:variantChanged={(e) => variantChanged(e)}
 					bind:loadingVariant
-					bind:newVariant
 					variants={article.variantSelection}
 					productId={article.id}
 				/>
 
 				<div class="mt-10 flex sm:flex-col1">
 					<button
-						disabled={!article.isBuyable || loadingVariant}
-						class:cursor-not-allowed={!article.isBuyable || loadingVariant}
-						class:opacity-50={!article.isBuyable || loadingVariant}
+						disabled={!article.isBuyable || loadingVariant || itemBasketId === null}
+						class:cursor-not-allowed={!article.isBuyable || loadingVariant || itemBasketId === null}
+						class:opacity-50={!article.isBuyable || loadingVariant || itemBasketId === null}
 						type="submit"
 						class="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
 						>Add to bag</button

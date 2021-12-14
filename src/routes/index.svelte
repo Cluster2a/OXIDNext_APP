@@ -5,14 +5,27 @@
 	import { getLangIdByPath } from '$lib/utilities/language';
 	import { createClient } from '$lib/graphql';
 
-	export async function load({ fetch, page }) {
+	export async function load({ fetch, page, session }) {
 		const url = createUrl(page.path, page.query);
 		const langId = getLangIdByPath(url);
+
+		let authToken = null;
+
+		if (
+			session &&
+			Object.keys(session).length !== 0 &&
+			Object.getPrototypeOf(session) !== Object.prototype
+		) {
+			authToken = session.get('authToken');
+		}
 
 		const client = await createClient({
 			url: GRAPHQL_ENDPOINT,
 			fetch,
-			dev: browser && dev
+			dev: browser && dev,
+			fetchOptions: () => {
+				return authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {};
+			}
 		});
 
 		const query = `query($langId: Int!, $url: String!) {

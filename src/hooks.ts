@@ -3,8 +3,11 @@ const COOKIE_NAME_AUTH_TOKEN = 'authToken';
 const COOKIE_NAME_BASKET_ID = 'basketId';
 
 export async function getSession(request) {
-	if (request.locals.authToken) {
-		return { authToken: request.locals.authToken };
+	if (request.locals.authToken || request.locals.basketId) {
+		return {
+			authToken: request?.locals?.authToken,
+			basketId: request?.locals?.basketId
+		};
 	}
 	return {};
 }
