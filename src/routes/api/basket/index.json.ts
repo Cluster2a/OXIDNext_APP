@@ -45,10 +45,22 @@ export async function post(request): Promise<EndpointOutput> {
 				product {
 					id
 					title
-					shortDescription
+					varSelection
+					imageGallery {
+						icon
+						thumb
+					}
 				}
 				amount
-			} 
+			}
+			cost {
+				productNet {
+					currency {
+						sign
+					}
+					price
+				}
+			}
 		}
 	}`;
 

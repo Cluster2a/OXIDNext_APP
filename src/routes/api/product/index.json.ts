@@ -19,7 +19,7 @@ const getClient = async (authToken: string): Promise<Client> => {
 };
 
 export async function post(request) {
-	const { productId } = request.body;
+	const { productId, selectedVariants } = request.body;
 	const cookies = cookie.parse(request.headers.cookie || '');
 
 	let authToken = null;
@@ -32,12 +32,12 @@ export async function post(request) {
 
 	const client = await getClient(authToken);
 
-	const query = `query($productId: ID!) {
+	const query = `query($productId: ID!, $selectedVariants: [SelectedVariants!]) {
         product(productId: $productId){
             id
             title
             varSelection
-			variantSelection {
+			variantSelection(selectedVariants: $selectedVariants) {
 				selectedVariant
 				variants {
 					label
@@ -71,7 +71,7 @@ export async function post(request) {
         } 
     }`;
 
-	const result = await client.query(query, { productId }).toPromise();
+	const result = await client.query(query, { productId, selectedVariants }).toPromise();
 
 	return {
 		status: 200,

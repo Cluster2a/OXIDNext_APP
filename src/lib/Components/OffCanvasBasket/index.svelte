@@ -137,8 +137,8 @@
 													class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden"
 												>
 													<img
-														src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg"
-														alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
+														src={item.product.imageGallery.thumb}
+														alt={item.product.title}
 														class="w-full h-full object-center object-cover"
 													/>
 												</div>
@@ -147,11 +147,11 @@
 													<div>
 														<div class="flex justify-between text-base font-medium text-gray-900">
 															<h3>
-																<a href="#"> Throwback Hip Bag </a>
+																<a href="#">{item.product.title}</a>
 															</h3>
 															<p class="ml-4">$90.00</p>
 														</div>
-														<p class="mt-1 text-sm text-gray-500">Salmon</p>
+														<p class="mt-1 text-sm text-gray-500">{item.product.varSelection}</p>
 													</div>
 													<div class="flex-1 flex items-end justify-between text-sm">
 														<p class="text-gray-500">Qty {item.amount}</p>

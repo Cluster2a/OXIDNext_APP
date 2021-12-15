@@ -2,7 +2,8 @@
 	import type {
 		BreadCrumbs as BreadCrumbsType,
 		Product as ProductType,
-		Query as QueryType
+		Query as QueryType,
+		VariantSelection as VariantSelectionType,
 	} from '$lib/generated/graphql';
 	import { createEventDispatcher } from 'svelte';
 	import BreadCrumbs from '$lib/Components/BreadCrumbs/index.svelte';
@@ -19,16 +20,15 @@
 	let loadingVariant = false;
 	let showAddToCartModal = false;
 	let itemBasketId = null;
-	let loadedProduct = article.id;
 
-	const getVariant = async (productId: string): Promise<void> => {
+	const getVariant = async (productId: string, selectedVariants: VariantSelectionType): Promise<void> => {
 		const res = await fetch('/api/product.json', {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ productId })
+			body: JSON.stringify({ productId, selectedVariants })
 		});
 
 		const result: QueryType = await res.json();
@@ -41,23 +41,15 @@
 		article.sku = result.product.sku;
 		article.isBuyable = result.product.isBuyable;
 		article.variantSelection = result.product.variantSelection;
+		
 		itemBasketId = result.product.id;
 	};
 
 	const variantChanged = async (e: CustomEvent) => {
+		const selectedVariants = e.detail.selectedVariants;
 		const currentVariant = e.detail.currentVariant;
 
-		if (currentVariant !== null) {
-			if (loadedProduct !== currentVariant) {
-				getVariant(currentVariant);
-				loadedProduct = currentVariant;
-			}
-		} else {
-			if (loadedProduct !== mainProduct) {
-				getVariant(mainProduct);
-				loadedProduct = mainProduct;
-			}
-		}
+		await getVariant(currentVariant !== null ? currentVariant : mainProduct, selectedVariants);
 
 		loadingVariant = false;
 	};

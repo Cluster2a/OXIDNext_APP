@@ -59,7 +59,6 @@ export const addToUserBasket = async (
     `;
 
 	const result = await client.mutation(query, { basketId, productId, amount }).toPromise();
-	console.log(result);
 	return result.data.basketAddItem.id;
 };
 

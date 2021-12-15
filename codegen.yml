@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'http://graphql.oxidnext.localhost.local/graphql/'
+schema: 'http://localhost:8080/graphql/'
 generates:
   src/lib/generated/graphql.ts: # Typescript types (output generated file)
     plugins: # List of needed plugins (installed as devDeps)

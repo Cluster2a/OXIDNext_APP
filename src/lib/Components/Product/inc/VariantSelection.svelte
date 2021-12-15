@@ -11,9 +11,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	let tmpVariants = variants;
 	let selectedVariants = [];
-	let blockSelections = false;
 
 	for (let index = 0; index < variants.variants.length; index++) {
 		selectedVariants[index] = {
@@ -42,14 +40,12 @@
 		});
 
 		const result: QueryType = await res.json();
-		variants = result.variants;
-		tmpVariants = result.variants;
 
 		dispatch('variantChanged', {
+			selectedVariants,
 			currentVariant: result.variants.selectedVariant
 		});
 
-		blockSelections = false;
 	};
 </script>
 
@@ -69,13 +65,13 @@
 						class:border-gray-200={!listItem.active}
 						class:text-gray-900={!listItem.active}
 						class:hover:bg-gray-50={!listItem.active}
-						class:cursor-not-allowed={blockSelections || listItem.disabled}
-						class:cursor-pointer={!blockSelections && !listItem.disabled}
-						class:opacity-50={blockSelections || listItem.disabled}
+						class:cursor-not-allowed={loadingVariant || listItem.disabled}
+						class:cursor-pointer={!loadingVariant && !listItem.disabled}
+						class:opacity-50={loadingVariant || listItem.disabled}
 						class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 focus:outline-none"
 					>
 						<input
-							disabled={blockSelections || listItem.disabled}
+							disabled={loadingVariant || listItem.disabled}
 							type="radio"
 							name="size-choice"
 							value={listItem.value}
