@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { Query as QueryType } from '$lib/generated/graphql';
 	import type { Basket } from '$lib/generated/graphql';
+	import Placeholder from './PlaceHolder.svelte';
 
 	export let showOffCanvasBasket: boolean = false;
 	export let numberOfNewItemsAdded: number = 0;
@@ -127,69 +128,103 @@
 							</div>
 						{/if}
 
-						<div class="mt-8">
-							<div class="flow-root">
-								<ul role="list" class="-my-6 divide-y divide-gray-200">
-									{#if basket?.items?.length > 0}
-										{#each basket.items as item}
-											<li class="py-6 flex">
-												<div
-													class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden"
-												>
-													<img
-														src={item.product.imageGallery.thumb}
-														alt={item.product.title}
-														class="w-full h-full object-center object-cover"
-													/>
-												</div>
+						{#if loadingBasketContent == true}
+							<Placeholder amount={4} />
+						{/if}
 
-												<div class="ml-4 flex-1 flex flex-col">
-													<div>
-														<div class="flex justify-between text-base font-medium text-gray-900">
-															<h3>
-																<a href="#">{item.product.title}</a>
-															</h3>
-															<p class="ml-4">$90.00</p>
-														</div>
-														<p class="mt-1 text-sm text-gray-500">{item.product.varSelection}</p>
+						{#if loadingBasketContent !== true}
+							<div class="mt-8">
+								<div class="flow-root">
+									<ul role="list" class="-my-6 divide-y divide-gray-200">
+										{#if basket?.items?.length > 0}
+											{#each basket.items as item}
+												<li class="py-6 flex">
+													<div
+														class="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden"
+													>
+														<img
+															src={item.product.imageGallery.thumb}
+															alt={item.product.title}
+															class="w-full h-full object-center object-cover"
+														/>
 													</div>
-													<div class="flex-1 flex items-end justify-between text-sm">
-														<p class="text-gray-500">Qty {item.amount}</p>
 
-														<div class="flex">
-															<button
-																type="button"
-																class="font-medium text-indigo-600 hover:text-indigo-500"
-																>Remove</button
-															>
+													<div class="ml-4 flex-1 flex flex-col">
+														<div>
+															<div class="flex justify-between text-base font-medium text-gray-900">
+																<h3>
+																	<a href="#">{item.product.title}</a>
+																</h3>
+																<p class="ml-4">{item.formattedNetPrice}</p>
+															</div>
+															<p class="mt-1 text-sm text-gray-500">{item.product.varSelection}</p>
+														</div>
+														<div class="flex-1 flex items-end justify-between text-sm">
+															<p class="text-gray-500">Qty {item.amount}</p>
+
+															<div class="flex">
+																<button
+																	type="button"
+																	class="font-medium text-indigo-600 hover:text-indigo-500"
+																	>Remove</button
+																>
+															</div>
 														</div>
 													</div>
-												</div>
-											</li>
-										{/each}
-									{/if}
-								</ul>
+												</li>
+											{/each}
+										{/if}
+									</ul>
+								</div>
 							</div>
-						</div>
+						{/if}
 					</div>
 
 					<div class="border-t border-gray-200 py-6 px-4 sm:px-6">
-						<div class="flex justify-between text-base font-medium text-gray-900">
-							<p>Subtotal</p>
-							<p>$262.00</p>
-						</div>
-						<p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+						{#if loadingBasketContent}
+							<div class="animate-pulse flex">
+								<div class="flex-1 space-y-3 py-1">
+									<div class="grid grid-cols-5 gap-4">
+										<div class="h-4 bg-gray-200 rounded col-span-1" />
+										<div class="h-4 rounded col-span-1" />
+										<div class="h-4 rounded col-span-1" />
+										<div class="h-4 rounded col-span-1" />
+										<div class="h-4 bg-gray-200 rounded col-span-1" />
+									</div>
+
+									<div class="grid grid-cols-3 gap-4">
+										<div class="h-4 bg-gray-200 rounded col-span-2" />
+										<div class="h-4 rounded col-span-1" />
+									</div>
+								</div>
+							</div>
+						{:else if basket?.formattedNetPrice}
+							<div class="flex justify-between text-base font-medium text-gray-900">
+								<p>Subtotal</p>
+								<p>{basket?.formattedNetPrice}</p>
+							</div>
+
+							<p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+						{/if}
+
 						<div class="mt-6">
 							<a
+								on:click|preventDefault={() => alert('WIP: Checkout')}
 								href="#"
+								disabled={loadingBasketContent}
+								class:cursor-not-allowed={loadingBasketContent}
+								class:opacity-50={loadingBasketContent}
 								class="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
 								>Checkout</a
 							>
 						</div>
 						<div class="mt-6 flex justify-center text-sm text-center text-gray-500">
 							<p>
-								or <button type="button" class="text-indigo-600 font-medium hover:text-indigo-500"
-									>Continue Shopping<span aria-hidden="true"> &rarr;</span></button
+								or <button
+									on:click|preventDefault={() => closeOffCancasVasket()}
+									type="button"
+									class="text-indigo-600 font-medium hover:text-indigo-500"
+									>Continue Shopping</button
 								>
 							</p>
 						</div>

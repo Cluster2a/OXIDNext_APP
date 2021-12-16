@@ -41,7 +41,9 @@ export async function post(request): Promise<EndpointOutput> {
 
 	const query = `query($basketId: ID!){
 		basket(basketId: $basketId){
+			formattedNetPrice
 			items(pagination: null) {
+				formattedNetPrice
 				product {
 					id
 					title

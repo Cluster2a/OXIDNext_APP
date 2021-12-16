@@ -3,7 +3,7 @@
 		BreadCrumbs as BreadCrumbsType,
 		Product as ProductType,
 		Query as QueryType,
-		VariantSelection as VariantSelectionType,
+		VariantSelection as VariantSelectionType
 	} from '$lib/generated/graphql';
 	import { createEventDispatcher } from 'svelte';
 	import BreadCrumbs from '$lib/Components/BreadCrumbs/index.svelte';
@@ -21,7 +21,12 @@
 	let showAddToCartModal = false;
 	let itemBasketId = null;
 
-	const getVariant = async (productId: string, selectedVariants: VariantSelectionType): Promise<void> => {
+	itemBasketId = article.id;
+
+	const getVariant = async (
+		productId: string,
+		selectedVariants: VariantSelectionType
+	): Promise<void> => {
 		const res = await fetch('/api/product.json', {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -41,7 +46,7 @@
 		article.sku = result.product.sku;
 		article.isBuyable = result.product.isBuyable;
 		article.variantSelection = result.product.variantSelection;
-		
+
 		itemBasketId = result.product.id;
 	};
 

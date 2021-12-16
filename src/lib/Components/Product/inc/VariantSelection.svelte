@@ -45,7 +45,6 @@
 			selectedVariants,
 			currentVariant: result.variants.selectedVariant
 		});
-
 	};
 </script>
 
