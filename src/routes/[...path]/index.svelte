@@ -96,5 +96,5 @@
 </div>
 
 {#if showOffCanvasBasket}
-	<OffCanvasBasket bind:showOffCanvasBasket numberOfNewItemsAdded={itemAmount} />
+	<OffCanvasBasket bind:showOffCanvasBasket bind:numberOfNewItemsAdded={itemAmount} />
 {/if}

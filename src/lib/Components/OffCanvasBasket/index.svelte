@@ -17,19 +17,28 @@
 	const getBasketContent = async (): Promise<Basket> => {
 		loadingBasketContent = true;
 
-		const res = await fetch('/api/basket.json', {
-			method: 'POST',
-			credentials: 'same-origin',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({})
-		});
+		const res = await fetch('/api/basket.json');
 
 		const result: QueryType = await res.json();
 		loadingBasketContent = false;
 
 		return result.basket;
+	};
+
+	const deleteBasketItem = async (basketItemId: string, amount: number): Promise<void> => {
+		loadingBasketContent = true;
+
+		const res = await fetch(`/api/basket.json?basketItemId=${basketItemId}&amount=${amount}`, {
+			method: 'DELETE'
+		});
+
+		if (res.ok) {
+			let result = await res.json();
+			basket = result.basket;
+			numberOfNewItemsAdded = 0;
+		}
+
+		loadingBasketContent = false;
 	};
 
 	onMount(async () => {
@@ -135,6 +144,29 @@
 						{#if loadingBasketContent !== true}
 							<div class="mt-8">
 								<div class="flow-root">
+									{#if basket?.items?.length < 1}
+										<div
+											class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative flex items-center"
+											role="alert"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="h-6 w-6 mr-2"
+												fill="none"
+												viewBox="0 0 24 24"
+												stroke="currentColor"
+											>
+												<path
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													stroke-width="2"
+													d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+												/>
+											</svg>
+
+											<span class="block sm:inline">Your basket is empty.</span>
+										</div>
+									{/if}
 									<ul role="list" class="-my-6 divide-y divide-gray-200">
 										{#if basket?.items?.length > 0}
 											{#each basket.items as item}
@@ -152,7 +184,7 @@
 													<div class="ml-4 flex-1 flex flex-col">
 														<div>
 															<div class="flex justify-between text-base font-medium text-gray-900">
-																<h3>
+																<h3 class="w-4/6">
 																	<a href="#">{item.product.title}</a>
 																</h3>
 																<p class="ml-4">{item.formattedNetPrice}</p>
@@ -164,6 +196,8 @@
 
 															<div class="flex">
 																<button
+																	on:click|preventDefault={() =>
+																		deleteBasketItem(item.id, item.amount)}
 																	type="button"
 																	class="font-medium text-indigo-600 hover:text-indigo-500"
 																	>Remove</button

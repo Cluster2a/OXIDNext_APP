@@ -8,7 +8,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import BreadCrumbs from '$lib/Components/BreadCrumbs/index.svelte';
 	import Reviews from './inc/Reviews.svelte';
-	import AddToBasketSuccess from './inc/AddToBasketSuccess.svelte';
 	import ShortDescription from './inc/ShortDescription.svelte';
 	import VariantSelection from './inc/VariantSelection.svelte';
 	export let article: ProductType;
@@ -60,7 +59,7 @@
 	};
 
 	const addToBasket = async (): Promise<void> => {
-		const res = await fetch('/api/basket/add.json', {
+		const res = await fetch('/api/basket.json', {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
@@ -80,10 +79,6 @@
 </script>
 
 <BreadCrumbs {breadCrumbs} hasPreviewImage={false} />
-
-{#if showAddToCartModal === true}
-	<AddToBasketSuccess bind:showAddToCartModal />
-{/if}
 
 <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 	<div class="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
