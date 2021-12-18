@@ -245,9 +245,9 @@
 							<a
 								on:click|preventDefault={() => alert('WIP: Checkout')}
 								href="#"
-								disabled={loadingBasketContent}
-								class:cursor-not-allowed={loadingBasketContent}
-								class:opacity-50={loadingBasketContent}
+								disabled={loadingBasketContent || basket?.items?.length < 1}
+								class:cursor-not-allowed={loadingBasketContent || basket?.items?.length < 1}
+								class:opacity-50={loadingBasketContent || basket?.items?.length < 1}
 								class="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
 								>Checkout</a
 							>

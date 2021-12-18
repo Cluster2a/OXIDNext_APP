@@ -17,8 +17,9 @@
 
 	let mainProduct = article.id;
 	let loadingVariant = false;
-	let showAddToCartModal = false;
 	let itemBasketId = null;
+	let addingToBasket = false;
+	let currentImage = article.imageGallery.images[0].zoom;
 
 	itemBasketId = article.id;
 
@@ -45,6 +46,7 @@
 		article.sku = result.product.sku;
 		article.isBuyable = result.product.isBuyable;
 		article.variantSelection = result.product.variantSelection;
+		currentImage = result.product.imageGallery.images[0].zoom;
 
 		itemBasketId = result.product.id;
 	};
@@ -59,6 +61,7 @@
 	};
 
 	const addToBasket = async (): Promise<void> => {
+		addingToBasket = true;
 		const res = await fetch('/api/basket.json', {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -69,12 +72,17 @@
 		});
 
 		const body = await res.json();
+		addingToBasket = false;
 
 		if (res.ok) {
 			dispatch('offCanvasBasketOpen', {
 				itemAmount: body.itemAmount
 			});
 		}
+	};
+
+	const switchImage = async (imageUrl: string): Promise<void> => {
+		currentImage = imageUrl;
 	};
 </script>
 
@@ -95,6 +103,7 @@
 								aria-controls={`tabs-${i}-panel-1`}
 								role="tab"
 								type="button"
+								on:click={() => switchImage(image.zoom)}
 							>
 								<span class="sr-only"> Angled view </span>
 								<span class="absolute inset-0 rounded-md overflow-hidden">
@@ -115,7 +124,7 @@
 				<!-- Tab panel, show/hide based on tab state. -->
 				<div id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
 					<img
-						src={article.imageGallery.images[0].zoom}
+						src={currentImage}
 						alt={article.shortDescription}
 						class="w-full h-full object-center object-cover sm:rounded-lg"
 					/>
@@ -155,12 +164,60 @@
 
 				<div class="mt-10 flex sm:flex-col1">
 					<button
-						disabled={!article.isBuyable || loadingVariant || itemBasketId === null}
-						class:cursor-not-allowed={!article.isBuyable || loadingVariant || itemBasketId === null}
-						class:opacity-50={!article.isBuyable || loadingVariant || itemBasketId === null}
+						disabled={!article.isBuyable ||
+							loadingVariant ||
+							itemBasketId === null ||
+							addingToBasket}
+						class:cursor-not-allowed={!article.isBuyable ||
+							loadingVariant ||
+							itemBasketId === null ||
+							addingToBasket}
+						class:opacity-50={!article.isBuyable ||
+							loadingVariant ||
+							itemBasketId === null ||
+							addingToBasket}
 						type="submit"
-						class="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
-						>Add to bag</button
+						class="max-w-xs flex-1 bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex inline-flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 sm:w-full"
+					>
+						{#if addingToBasket === true}
+							<svg
+								class="animate-spin -ml-1 h-6 w-6 mr-2"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									class="opacity-25"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									stroke-width="4"
+								/>
+								<path
+									class="opacity-75"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+								/>
+							</svg>
+						{:else}
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-6 w-6 mr-2"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+								/>
+							</svg>
+						{/if}
+
+						Add to bag</button
 					>
 
 					<button
