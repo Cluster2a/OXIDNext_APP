@@ -9,11 +9,13 @@
 >
 	<div class="group relative">
 		<div class="w-full bg-gray-200 rounded-md overflow-hidden aspect-w-1 aspect-h-1">
-			<img
-				src={product.imageGallery.images[0].zoom}
-				alt={product.shortDescription}
-				class="w-full h-full object-center object-cover group-hover:scale-110 transform transition duration-300"
-			/>
+			{#if product?.imageGallery?.images[0]?.zoom}
+				<img
+					src={product.imageGallery.images[0].zoom}
+					alt={product.shortDescription}
+					class="w-full h-full object-center object-cover group-hover:scale-110 transform transition duration-300"
+				/>
+			{/if}
 		</div>
 		<div class="mt-6">
 			<h3 class="mt-1 font-semibold text-gray-900">

@@ -1,7 +1,3 @@
-<script type="ts">
-	import Particles from '$lib/Components/Particles/index.svelte';
-</script>
-
 <div class="flex h-screen relative" style="align-items: center; justify-content: center;">
 	<div class="">
 		<div class="relative">

@@ -19,7 +19,7 @@
 	let loadingVariant = false;
 	let itemBasketId = null;
 	let addingToBasket = false;
-	let currentImage = article.imageGallery.images[0].zoom;
+	let currentImage = article?.imageGallery?.images[0]?.zoom;
 
 	itemBasketId = article.id;
 
@@ -46,7 +46,7 @@
 		article.sku = result.product.sku;
 		article.isBuyable = result.product.isBuyable;
 		article.variantSelection = result.product.variantSelection;
-		currentImage = result.product.imageGallery.images[0].zoom;
+		currentImage = result?.product?.imageGallery?.images[0]?.zoom;
 
 		itemBasketId = result.product.id;
 	};
@@ -123,11 +123,13 @@
 			<div class="w-full aspect-w-1 aspect-h-1">
 				<!-- Tab panel, show/hide based on tab state. -->
 				<div id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-					<img
-						src={currentImage}
-						alt={article.shortDescription}
-						class="w-full h-full object-center object-cover sm:rounded-lg"
-					/>
+					{#if currentImage}
+						<img
+							src={currentImage}
+							alt={article.shortDescription}
+							class="w-full h-full object-center object-cover sm:rounded-lg"
+						/>
+					{/if}
 				</div>
 
 				<!-- More images... -->

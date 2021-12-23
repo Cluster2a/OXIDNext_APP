@@ -9,13 +9,13 @@
 	export let breadCrumbs: BreadCrumbsType[];
 </script>
 
-{#if category && category.previewImage}
+{#if category && category.icon}
 	<!-- Hero -->
 	<div class="masterhead flex flex-col border-b w-full lg:border-0">
 		<div class="relative">
 			<div
 				class="relative bg-gray-900 lg:bg-transparent bg-cover bg-no-repeat"
-				style="background-position: 50% 25%; background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2)),url('{category.previewImage}');"
+				style="background-position: 50% 25%; background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2)),url('{category.icon}');"
 			>
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div class="max-w-2xl mx-auto py-24 lg:py-34 lg:max-w-none">
@@ -23,10 +23,10 @@
 							<h1
 								class="text-4xl font-extrabold tracking-tight text-gray-100 sm:text-5xl xl:text-6xl"
 							>
-								{category.title}
+								{@html category.title}
 							</h1>
 							<p class="mt-4 text-xl text-gray-400">
-								{category.shortDescription}
+								{@html category.shortDescription}
 							</p>
 						</div>
 					</div>

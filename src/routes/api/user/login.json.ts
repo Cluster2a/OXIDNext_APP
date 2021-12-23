@@ -18,7 +18,7 @@ const login = async (username: string, password: string): Promise<string> => {
     }`;
 
 	const result = await client.query(query).toPromise();
-	const token: string = result.data.token;
+	const token: string = result?.data?.token;
 
 	return token;
 };

@@ -71,17 +71,24 @@ export async function post(request) {
                     selectedVariant
                     variants {
                         label
+                        isEnriched
                         list {
                             name
                             value
                             active
                             disabled
+                            type
+                          	colorCode
+                          	image
                         }
                         activeSelection {
                             name
                             value
                             active
                             disabled
+                            type
+                          	colorCode
+                          	image
                         }
                     }
                 } 
@@ -102,6 +109,7 @@ export async function post(request) {
                 shortDescription
                 longDescription
                 previewImage
+                icon
                 children {
                     title
                     shortDescription
@@ -133,6 +141,7 @@ export async function post(request) {
             }
         } 
     }`;
+
 	const result = await client.query(query, { url, langId }).toPromise();
 
 	return {

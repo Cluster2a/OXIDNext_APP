@@ -44,7 +44,7 @@
 								sveltekit:prefetch
 								href={`/${bredcrumb.link}`}
 								title={bredcrumb.title}
-								itemprop="item"><span itemprop="name">{bredcrumb.title}</span></a
+								itemprop="item"><span itemprop="name">{@html bredcrumb.title}</span></a
 							>
 						</li>
 						{#if i + 1 < breadCrumbs.length}

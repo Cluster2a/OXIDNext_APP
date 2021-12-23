@@ -41,17 +41,24 @@ export async function post(request) {
 				selectedVariant
 				variants {
 					label
+					isEnriched
 					list {
 						name
 						value
 						active
 						disabled
+						type
+						colorCode
+						image
 					}
 					activeSelection {
 						name
 						value
 						active
 						disabled
+						type
+						colorCode
+						image
 					}
 				}
 			} 

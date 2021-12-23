@@ -15,7 +15,7 @@
 							class="border-transparent outline-none focus:outline-none text-white hover:text-gray-500 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
 							sveltekit:prefetch
 							href={`/${category.link}`}
-							>{category.title}
+							>{@html category.title}
 							{#if category.subCategories.length > 0}
 								<svg
 									class="-mr-1 ml-2 h-5 w-5"
@@ -48,7 +48,7 @@
 											sveltekit:prefetch
 											href={`/${subCategories.link}`}
 											class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100"
-											role="menuitem">{subCategories.title}</a
+											role="menuitem">{@html subCategories.title}</a
 										>
 									{/each}
 								</div>
