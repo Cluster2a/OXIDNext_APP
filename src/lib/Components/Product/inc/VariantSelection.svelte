@@ -60,7 +60,11 @@
 						{#if listItem.type === 'color'}
 							<label
 								class:opacity-50={loadingVariant || listItem.disabled}
-								style="{listItem.active ? 'box-shadow: 0 0 0 2px #fff, 0 0 0 calc(3px + 2px) ' + listItem.colorCode + ', 0 0 #0000;' : ''}"
+								style={listItem.active
+									? 'box-shadow: 0 0 0 2px #fff, 0 0 0 calc(3px + 2px) ' +
+									  listItem.colorCode +
+									  ', 0 0 #0000;'
+									: ''}
 								class="rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
 							>
 								<input
@@ -70,7 +74,10 @@
 									value={listItem.value}
 									class="sr-only"
 									on:click|preventDefault={() => selectVariant(i, listItem.value)}
-									aria-labelledby="varselect-{variantSelection.label.replace(/[^a-zA-Z0-9]/g, '')}-choice"
+									aria-labelledby="varselect-{variantSelection.label.replace(
+										/[^a-zA-Z0-9]/g,
+										''
+									)}-choice"
 								/>
 								<span
 									aria-hidden="true"
@@ -99,10 +106,17 @@
 									value={listItem.value}
 									class="sr-only"
 									on:click|preventDefault={() => selectVariant(i, listItem.value)}
-									aria-labelledby="varselect-{variantSelection.label.replace(/[^a-zA-Z0-9]/g, '')}-choice"
+									aria-labelledby="varselect-{variantSelection.label.replace(
+										/[^a-zA-Z0-9]/g,
+										''
+									)}-choice"
 								/>
-								<img width="40" height="40" src={listItem.image} alt={listItem.value}>
-								<img class="absolute hidden group-hover:block rounded-md" src={listItem.image} alt={listItem.value}>
+								<img width="40" height="40" src={listItem.image} alt={listItem.value} />
+								<img
+									class="absolute hidden group-hover:block rounded-md"
+									src={listItem.image}
+									alt={listItem.value}
+								/>
 							</label>
 						{/if}
 					{/each}
@@ -130,7 +144,10 @@
 								value={listItem.value}
 								class="sr-only"
 								on:click|preventDefault={() => selectVariant(i, listItem.value)}
-								aria-labelledby="varselect-{variantSelection.label.replace(/[^a-zA-Z0-9]/g, '')}-choice"
+								aria-labelledby="varselect-{variantSelection.label.replace(
+									/[^a-zA-Z0-9]/g,
+									''
+								)}-choice"
 							/>
 							<p>{listItem.name}</p>
 						</label>

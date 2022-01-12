@@ -70,8 +70,17 @@ export async function post(request) {
                 }
                 icon
                 thumb
-            } 
+            }
+			crossSelling {
+				id
+				title
+				formattedPrice
+				imageGallery {
+				  thumb
+				}
+			}
             shortDescription
+			longDescription
             formattedPrice
             sku
             isBuyable

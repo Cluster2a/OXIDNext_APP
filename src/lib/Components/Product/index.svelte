@@ -10,6 +10,7 @@
 	import Reviews from './inc/Reviews.svelte';
 	import ShortDescription from './inc/ShortDescription.svelte';
 	import VariantSelection from './inc/VariantSelection.svelte';
+	import Crossselling from './inc/Crossselling.svelte';
 	export let article: ProductType;
 	export let breadCrumbs: BreadCrumbsType[];
 
@@ -20,6 +21,7 @@
 	let itemBasketId = null;
 	let addingToBasket = false;
 	let currentImage = article?.imageGallery?.images[0]?.zoom;
+	let longDescriptionHidden = false;
 
 	itemBasketId = article.id;
 
@@ -224,9 +226,8 @@
 
 					<button
 						type="button"
-						class="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+						class="hidden ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500"
 					>
-						<!-- Heroicon name: outline/heart -->
 						<svg
 							class="h-6 w-6 flex-shrink-0"
 							xmlns="http://www.w3.org/2000/svg"
@@ -248,28 +249,30 @@
 			</form>
 
 			<section aria-labelledby="details-heading" class="mt-12">
-				<h2 id="details-heading" class="sr-only">Additional details</h2>
+				<h2 id="details-heading" class="sr-only">Description</h2>
 
 				<div class="border-t divide-y divide-gray-200">
 					<div>
 						<h3>
-							<!-- Expand/collapse question button -->
 							<button
 								type="button"
 								class="group relative w-full py-6 flex justify-between items-center text-left"
 								aria-controls="disclosure-1"
 								aria-expanded="false"
+								on:click|preventDefault={() => (longDescriptionHidden = !longDescriptionHidden)}
 							>
-								<!-- Open: "text-indigo-600", Closed: "text-gray-900" -->
-								<span class="text-gray-900 text-sm font-medium"> Features </span>
+								<span
+									class="text-sm font-medium"
+									class:text-indigo-600={longDescriptionHidden === false}
+									class:text-gray-900={longDescriptionHidden !== false}
+								>
+									Description
+								</span>
 								<span class="ml-6 flex items-center">
-									<!--
-                      Heroicon name: outline/plus-sm
-
-                      Open: "hidden", Closed: "block"
-                    -->
 									<svg
-										class="block h-6 w-6 text-gray-400 group-hover:text-gray-500"
+										class="h-6 w-6 text-gray-400 group-hover:text-gray-500"
+										class:block={longDescriptionHidden === false}
+										class:hidden={longDescriptionHidden !== false}
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -283,13 +286,10 @@
 											d="M12 6v6m0 0v6m0-6h6m-6 0H6"
 										/>
 									</svg>
-									<!--
-                      Heroicon name: outline/minus-sm
-
-                      Open: "block", Closed: "hidden"
-                    -->
 									<svg
-										class="hidden h-6 w-6 text-indigo-400 group-hover:text-indigo-500"
+										class="h-6 w-6 text-indigo-400 group-hover:text-indigo-500"
+										class:block={longDescriptionHidden !== false}
+										class:hidden={longDescriptionHidden === false}
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -306,22 +306,13 @@
 								</span>
 							</button>
 						</h3>
-						<div class="pb-6 prose prose-sm" id="disclosure-1">
-							<ul role="list">
-								<li>Multiple strap configurations</li>
-
-								<li>Spacious interior with top zip</li>
-
-								<li>Leather handle and tabs</li>
-
-								<li>Interior dividers</li>
-
-								<li>Stainless strap loops</li>
-
-								<li>Double stitched construction</li>
-
-								<li>Water-resistant</li>
-							</ul>
+						<div
+							class:block={longDescriptionHidden === false}
+							class:hidden={longDescriptionHidden !== false}
+							class="pb-6 prose prose-sm"
+							id="disclosure-1"
+						>
+							{article.longDescription}
 						</div>
 					</div>
 
@@ -330,4 +321,7 @@
 			</section>
 		</div>
 	</div>
+	{#if article?.crossSelling?.length > 0}
+		<Crossselling products={article.crossSelling} />
+	{/if}
 </div>

@@ -62,6 +62,7 @@ export async function post(request) {
                 id
                 title
                 shortDescription
+                longDescription
                 shortLink
                 ratingAverage
                 varSelection
@@ -101,7 +102,19 @@ export async function post(request) {
                     }
                     icon
                     thumb
-                } 
+                }
+                crossSelling {
+                    id
+                    title
+                    formattedPrice
+                    shortLink
+                    imageGallery {
+                        images {
+                
+                            zoom
+                          }
+                    }
+                }
             }
             category {
                 id

@@ -14,8 +14,8 @@
 	<div class="masterhead flex flex-col border-b w-full lg:border-0">
 		<div class="relative">
 			<div
-				class="relative bg-gray-900 lg:bg-transparent bg-cover bg-no-repeat"
-				style="background-position: 50% 25%; background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2)),url('{category.icon}');"
+				class="relative bg-gray-900 lg:bg-transparent bg-cover bg-fixed bg-center"
+				style="background-position: 0 100%; background-image: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.2)),url('{category.icon}');"
 			>
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div class="max-w-2xl mx-auto py-24 lg:py-34 lg:max-w-none">
@@ -51,7 +51,7 @@
 									class="card-zoom flex rounded-md items-center justify-center relative overflow-hidden w-full shadow-xl h-60 h-80 bg-white overflow-hidden sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"
 								>
 									<div
-										class="card-zoom-image transition-transform duration-300 absolute w-full h-full bg-center bg-cover"
+										class="card-zoom-image transition-transform duration-200 absolute w-full h-full bg-center bg-cover"
 										style="background-image: url('{childCategory.icon}');"
 									/>
 

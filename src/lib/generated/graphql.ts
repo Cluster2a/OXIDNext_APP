@@ -876,6 +876,11 @@ export type CustomerInput = {
   password: Scalars['String'];
 };
 
+export type DateFilterInput = {
+  between?: InputMaybe<Array<Scalars['String']>>;
+  equals?: InputMaybe<Scalars['String']>;
+};
+
 export type DeliveryAddress = {
   __typename?: 'DeliveryAddress';
   /**
@@ -1300,6 +1305,13 @@ export type Mutation = {
    */
   customerRegister: Customer;
   /**
+   * Invalidate all tokens per customer.
+   * - Customer with right INVALIDATE_ANY_TOKEN can invalidate tokens for any customer Id.
+   *  - Customer without special rights can invalidate only own tokens.
+   * If no customerId is supplied, own Id is taken.
+   */
+  customerTokensDelete: Scalars['Int'];
+  /**
    *
    *
    */
@@ -1330,6 +1342,22 @@ export type Mutation = {
    *
    */
   placeOrder: Order;
+  /**
+   * Regenerates the JWT signature key.
+   * This will invalidate all issued tokens for the current shop.
+   * Only use if no other option is left.
+   */
+  regenerateSignatureKey: Scalars['Boolean'];
+  /**
+   * Invalidate all tokens for current shop.
+   *
+   */
+  shopTokensDelete: Scalars['Int'];
+  /**
+   *
+   *
+   */
+  tokenDelete: Scalars['Boolean'];
 };
 
 
@@ -1374,6 +1402,11 @@ export type MutationCustomerRegisterArgs = {
 };
 
 
+export type MutationCustomerTokensDeleteArgs = {
+  customerId?: InputMaybe<Scalars['ID']>;
+};
+
+
 export type MutationNewsletterOptInArgs = {
   newsletterStatus: NewsletterStatusInput;
 };
@@ -1392,6 +1425,11 @@ export type MutationNewsletterUnsubscribeArgs = {
 export type MutationPlaceOrderArgs = {
   basketId: Scalars['ID'];
   confirmTermsAndConditions?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationTokenDeleteArgs = {
+  tokenId: Scalars['ID'];
 };
 
 export type NaLanguage = {
@@ -2748,6 +2786,11 @@ export type Query = {
    */
   token: Scalars['String'];
   /**
+   * Query a customer's active JWT.
+   * User with right 'VIEW_ANY_TOKEN' can query any customer's tokens.
+   */
+  tokens: Array<Token>;
+  /**
    *
    *
    */
@@ -2927,6 +2970,13 @@ export type QueryTokenArgs = {
 };
 
 
+export type QueryTokensArgs = {
+  filter?: InputMaybe<TokenFilterList>;
+  pagination?: InputMaybe<PaginationFilterInput>;
+  sort?: InputMaybe<TokenSorting>;
+};
+
+
 export type QueryTranslationArgs = {
   key: Scalars['String'];
 };
@@ -3093,6 +3143,55 @@ export type Subscriber = {
    *
    */
   userName: Scalars['String'];
+};
+
+export type Token = {
+  __typename?: 'Token';
+  /**
+   *
+   *
+   */
+  createdAt?: Maybe<Scalars['DateTime']>;
+  /**
+   *
+   *
+   */
+  customerId: Scalars['ID'];
+  /**
+   *
+   *
+   */
+  expiresAt?: Maybe<Scalars['DateTime']>;
+  /**
+   *
+   *
+   */
+  id: Scalars['ID'];
+  /**
+   *
+   *
+   */
+  shopId: Scalars['ID'];
+  /**
+   *
+   *
+   */
+  token: Scalars['String'];
+  /**
+   *
+   *
+   */
+  userAgent: Scalars['String'];
+};
+
+export type TokenFilterList = {
+  customerId?: InputMaybe<IdFilterInput>;
+  expiresAt?: InputMaybe<DateFilterInput>;
+  shopId?: InputMaybe<IdFilterInput>;
+};
+
+export type TokenSorting = {
+  expiresAt?: InputMaybe<Scalars['String']>;
 };
 
 export type Translation = {

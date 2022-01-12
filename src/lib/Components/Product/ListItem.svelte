@@ -13,7 +13,7 @@
 				<img
 					src={product.imageGallery.images[0].zoom}
 					alt={product.shortDescription}
-					class="w-full h-full object-center object-cover group-hover:scale-110 transform transition duration-300"
+					class="w-full h-full object-center object-cover group-hover:scale-140 transform transition duration-200"
 				/>
 			{/if}
 		</div>

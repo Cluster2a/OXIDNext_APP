@@ -46,11 +46,11 @@
 			<div class="max-w-md">
 				<div class="w-24 h-2 orange-700 mb-4" />
 				<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
-					Incredible performance
+					Peak Performance
 				</h2>
 				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					NEXT takes advantage of multi-layer caching. The storefront is made of SvelteKit - the
-					fastest JS framework on the market. The page scores 100% in Lighthouse.
+					NEXT takes advantage of multi-layer caching. The storefront is made of SvelteKit - one of
+					the fastest JavaScript framework on the market. The page scores 100% in Lighthouse.
 				</p>
 				<a
 					href="/blog/this-is-latest-post/"
