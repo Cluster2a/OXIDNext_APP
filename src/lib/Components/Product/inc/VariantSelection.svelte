@@ -70,14 +70,9 @@
 								<input
 									disabled={loadingVariant || listItem.disabled}
 									type="radio"
-									name="varselect-{variantSelection.label.replace(/[^a-zA-Z0-9]/g, '')}-choice"
 									value={listItem.value}
 									class="sr-only"
 									on:click|preventDefault={() => selectVariant(i, listItem.value)}
-									aria-labelledby="varselect-{variantSelection.label.replace(
-										/[^a-zA-Z0-9]/g,
-										''
-									)}-choice"
 								/>
 								<span
 									aria-hidden="true"
@@ -102,14 +97,9 @@
 								<input
 									disabled={loadingVariant || listItem.disabled}
 									type="radio"
-									name="varselect-{variantSelection.label.replace(/[^a-zA-Z0-9]/g, '')}-choice"
 									value={listItem.value}
 									class="sr-only"
 									on:click|preventDefault={() => selectVariant(i, listItem.value)}
-									aria-labelledby="varselect-{variantSelection.label.replace(
-										/[^a-zA-Z0-9]/g,
-										''
-									)}-choice"
 								/>
 								<img width="40" height="40" src={listItem.image} alt={listItem.value} />
 								<img
@@ -140,14 +130,9 @@
 							<input
 								disabled={loadingVariant || listItem.disabled}
 								type="radio"
-								name="varselect-{variantSelection.label.replace(/[^a-zA-Z0-9]/g, '')}-choice"
 								value={listItem.value}
 								class="sr-only"
 								on:click|preventDefault={() => selectVariant(i, listItem.value)}
-								aria-labelledby="varselect-{variantSelection.label.replace(
-									/[^a-zA-Z0-9]/g,
-									''
-								)}-choice"
 							/>
 							<p>{listItem.name}</p>
 						</label>

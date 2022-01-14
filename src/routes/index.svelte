@@ -1,16 +1,8 @@
-<div class="flex h-screen relative" style="align-items: center; justify-content: center;">
-	<div class="">
-		<div class="relative">
-			<a href="/startseite/"
-				><h1
-					class="flickering"
-					style="text-shadow: 0.75vw 0.75vw 0.25vw rgb(0 0 0 / 25%);"
-					data-heading="X"
-				>
-					NEXT
-				</h1></a
-			>
-		</div>
+<div class="flex h-screen relative items-center justify-center">
+	<div class="relative">
+		<a href="/startseite/">
+			<img src="/img/zoridAnimated.svg" alt="" width="600" height="auto" />
+		</a>
 	</div>
 
 	<div class="flex absolute bottom-5 flex-col my-auto items-center animate-bounce">
@@ -35,9 +27,10 @@
 <div class="bg-white relative">
 	<div class="bg-white max-w-xl mx-auto text-center py-24 md:py-32">
 		<div class="w-24 h-2 bg-orange-700 mb-4 mx-auto" />
-		<h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">What is NEXT?</h2>
+		<h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">What is Zorid?</h2>
 		<p class="font-light text-gray-600 mb-6 leading-relaxed">
-			NEXT is a storefront for OXID eSales. It is blazing fast and uses top notch technology.
+			Zorid is the first fully featured Storefront for OXID eSales. It is blazing fast and uses top
+			notch technology.
 		</p>
 	</div>
 
@@ -49,7 +42,7 @@
 					Peak Performance
 				</h2>
 				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					NEXT takes advantage of multi-layer caching. The storefront is made of SvelteKit - one of
+					Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - one of
 					the fastest JavaScript framework on the market. The page scores 100% in Lighthouse.
 				</p>
 				<a
@@ -75,7 +68,7 @@
 				<div class="w-24 h-2 orange-700 mb-4" />
 				<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">SEO optimized</h2>
 				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					NEXT uses server-side rendering to render the page. The crawler will be able to see the
+					Zorid uses server-side rendering to render the page. The crawler will be able to see the
 					entire source code. The top page speed will result in a 100% Lighthouse score, which also
 					impacts your ranking.
 				</p>
@@ -96,7 +89,7 @@
 					Faster development
 				</h2>
 				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					NEXT takes advantage of multi-layer caching. The storefront is made of SvelteKit - the
+					Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the
 					fastest JS framework on the market. The page scores 100% in Lighthouse.
 				</p>
 				<a

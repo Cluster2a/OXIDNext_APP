@@ -2,10 +2,6 @@
 <div class="hidden lg:flex lg:items-center">
 	<a sveltekit:prefetch href="/">
 		<span class="sr-only">Workflow</span>
-		<img
-			class="h-8 w-auto"
-			src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-			alt=""
-		/>
+		<img src="/img/zorid.svg" alt="" class="h-8 w-auto" />
 	</a>
 </div>
