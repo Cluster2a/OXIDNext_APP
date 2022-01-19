@@ -1,0 +1,99 @@
+header:
+  topic: What is Zorid?
+  text: Zorid is the first fully featured Storefront for OXID eSales. It is blazing fast and uses top-notch technology.
+
+sections:
+  - header: Peak Performance
+    image: performance.svg
+    text: >-
+      Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - one of the fastest JavaScript framework on the market. The page scores 100% in Lighthouse.
+    description: >-
+      <p class="mb-4">
+          Zorin is using GraphQL to fetch data from the backend. Only the data that is shown on the
+          frontend is beeing fetched from the server. With this technique the request are as fast as
+          possible.
+      </p>
+      <p class="mb-4">
+        All GraphQL requests are batched to one request to minimize the number of requests and the
+        bootstrapping overhead.
+      </p>
+
+      <p class="mb-4">Cahing is beeing used on multiple layers:</p>
+
+      <ul class="list-disc ps-4 ml-12 mb-4">
+        <li>Redis in the backend</li>
+        <li>GraphCache in Node.js middleware</li>
+        <li>HTTP Caching for the storefront</li>
+      </ul>
+
+      <p class="mb-4">
+        The storefont is based on Svelte-Kit, one of the fastest JavaScript-Frameworks on the
+        market.
+      </p>
+
+      <p>
+        WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
+      </p>
+  - header: SEO optimized
+    image: seo.svg
+    text: >-
+      Zorid uses server-side rendering to render the page. The crawler will be able to see the entire source code. The top page speed will result in a 100% Lighthouse score, which also impacts your ranking.
+    description: >-
+      <p class="mb-4">
+          Zorin is using GraphQL to fetch data from the backend. Only the data that is shown on the
+          frontend is beeing fetched from the server. With this technique the request are as fast as
+          possible.
+      </p>
+      <p class="mb-4">
+        All GraphQL requests are batched to one request to minimize the number of requests and the
+        bootstrapping overhead.
+      </p>
+
+      <p class="mb-4">Cahing is beeing used on multiple layers:</p>
+
+      <ul class="list-disc ps-4 ml-12 mb-4">
+        <li>Redis in the backend</li>
+        <li>GraphCache in Node.js middleware</li>
+        <li>HTTP Caching for the storefront</li>
+      </ul>
+
+      <p class="mb-4">
+        The storefont is based on Svelte-Kit, one of the fastest JavaScript-Frameworks on the
+        market.
+      </p>
+
+      <p>
+        WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
+      </p>
+
+  - header: Faster development
+    image: performance.svg
+    text: >-
+      Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the fastest JS framework on the market. The page scores 100% in Lighthouse.
+    description: >-
+      <p class="mb-4">
+          Zorin is using GraphQL to fetch data from the backend. Only the data that is shown on the
+          frontend is beeing fetched from the server. With this technique the request are as fast as
+          possible.
+      </p>
+      <p class="mb-4">
+        All GraphQL requests are batched to one request to minimize the number of requests and the
+        bootstrapping overhead.
+      </p>
+
+      <p class="mb-4">Cahing is beeing used on multiple layers:</p>
+
+      <ul class="list-disc ps-4 ml-12 mb-4">
+        <li>Redis in the backend</li>
+        <li>GraphCache in Node.js middleware</li>
+        <li>HTTP Caching for the storefront</li>
+      </ul>
+
+      <p class="mb-4">
+        The storefont is based on Svelte-Kit, one of the fastest JavaScript-Frameworks on the
+        market.
+      </p>
+
+      <p>
+        WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
+      </p>

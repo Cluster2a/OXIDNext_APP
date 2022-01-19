@@ -1,6 +1,7 @@
 import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-node';
 import WindiCSS from 'vite-plugin-windicss';
+import yaml from '@rollup/plugin-yaml';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -17,7 +18,7 @@ const config = {
 			define: {
 				'process.env.VITE_BUILD_TIME': JSON.stringify(new Date().toISOString())
 			},
-			plugins: [WindiCSS()],
+			plugins: [WindiCSS(), yaml()],
 			optimizeDeps: {
 				exclude: ['@urql/svelte']
 			}

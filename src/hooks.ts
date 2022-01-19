@@ -13,7 +13,7 @@ export async function getSession(request) {
 }
 
 export async function handle({ request, resolve }) {
-	const loggingOut = request.path === '/api/logout.json';
+	const loggingOut = request.url.pathname === '/api/logout.json';
 	const cookies = cookie.parse(request.headers.cookie || '');
 
 	request.locals.authToken = cookies[COOKIE_NAME_AUTH_TOKEN];

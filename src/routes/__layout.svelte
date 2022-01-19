@@ -1,12 +1,13 @@
 <script context="module" lang="ts">
-	export async function load({ fetch, page }) {
+	export async function load({ fetch, url }) {
+		console.log(url);
 		await fetch('/api/user/login.json', {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ email: null, password: null, page: page.host })
+			body: JSON.stringify({ email: null, password: null, page: url.host })
 		});
 
 		return {};
@@ -15,6 +16,7 @@
 
 <script lang="ts">
 	import 'virtual:windi.css';
+	import '@fontsource/comfortaa';
 </script>
 
 <slot />

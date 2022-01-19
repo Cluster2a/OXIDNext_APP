@@ -177,8 +177,8 @@ export async function post(request) {
 }
 
 export async function del(request) {
-	const basketItemId = request.query.get('basketItemId');
-	const amount = request.query.get('amount');
+	const basketItemId = request.url.searchParams.get('basketItemId');
+	const amount = request.url.searchParams.get('amount');
 	const cookies = cookie.parse(request.headers.cookie || '');
 
 	let authToken = null;

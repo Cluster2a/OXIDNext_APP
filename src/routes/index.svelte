@@ -1,3 +1,15 @@
+<script lang="ts">
+	import type { Index as IndexType } from '$lib/types/content/index';
+	import CMSIndex from '$lib/content/index.yaml';
+
+	const contentIndex: IndexType = CMSIndex;
+
+	let readMore = [];
+	for (let index = 0; index < contentIndex.sections.length; index++) {
+		readMore[index] = false;
+	}
+</script>
+
 <div class="flex h-screen relative items-center justify-center">
 	<div class="relative">
 		<a href="/startseite/">
@@ -27,84 +39,125 @@
 <div class="bg-white relative">
 	<div class="bg-white max-w-xl mx-auto text-center py-24 md:py-32">
 		<div class="w-24 h-2 bg-orange-700 mb-4 mx-auto" />
-		<h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">What is Zorid?</h2>
+		<h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
+			{contentIndex.header.topic}
+		</h2>
 		<p class="font-light text-gray-600 mb-6 leading-relaxed">
-			Zorid is the first fully featured Storefront for OXID eSales. It is blazing fast and uses top
-			notch technology.
+			{contentIndex.header.text}
 		</p>
 	</div>
 
-	<div class="grid grid-cols-1 md:grid-cols-2">
-		<div class="bg-gray-100 p-12 md:p-24 flex justify-end items-center">
-			<div class="max-w-md">
-				<div class="w-24 h-2 orange-700 mb-4" />
-				<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
-					Peak Performance
-				</h2>
-				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - one of
-					the fastest JavaScript framework on the market. The page scores 100% in Lighthouse.
-				</p>
-				<a
-					href="/blog/this-is-latest-post/"
-					class="inline-block border-2 border-orange-700 font-light text-orange-700 text-sm uppercase tracking-widest py-3 px-8 hover:bg-orange-700 hover:text-white"
-					>Read more</a
-				>
-			</div>
-		</div>
-		<div class="bg-white p-12 md:p-24 flex justify-start items-center">
-			<a href="/blog/this-is-latest-post/"
-				><img src="/img/performance.svg" class="w-full max-w-md" /></a
-			>
-		</div>
-	</div>
+	{#each contentIndex.sections as section, index}
+		{#if index % 2 === 0}
+			<div class="grid grid-cols-1 md:grid-cols-2">
+				<div class="bg-gray-100 p-12 md:p-24 flex justify-end items-center relative">
+					<div class="max-w-md z-20">
+						<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
+							{section.header}
+						</h2>
+						<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
+							{section.text}
+						</p>
+						<button
+							on:click|preventDefault={() => {
+								readMore[index] = true;
+							}}
+							class="inline-block border-2 border-orange-700 font-light text-orange-700 text-sm uppercase tracking-widest py-3 px-8 hover:bg-orange-700 hover:text-white"
+							>Read more</button
+						>
+					</div>
 
-	<div class="grid grid-cols-1 md:grid-cols-2">
-		<div class="bg-white p-12 md:p-24 flex justify-end items-center">
-			<a href="/blog/this-is-latest-post/"><img src="/img/seo.svg" class="w-full max-w-md" /></a>
-		</div>
-		<div class="bg-gray-100 p-12 md:p-24 flex justify-start items-center">
-			<div class="max-w-md">
-				<div class="w-24 h-2 orange-700 mb-4" />
-				<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">SEO optimized</h2>
-				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					Zorid uses server-side rendering to render the page. The crawler will be able to see the
-					entire source code. The top page speed will result in a 100% Lighthouse score, which also
-					impacts your ranking.
-				</p>
-				<a
-					href="/blog/this-is-latest-post/"
-					class="inline-block border-2 border-orange-700 font-light text-orange-700 text-sm uppercase tracking-widest py-3 px-8 hover:bg-orange-700 hover:text-white"
-					>Read more</a
-				>
+					<div
+						class="absolute z-10 fade-in overflow-y-auto text-white bg-slate-800 w-full h-full top-0 left-0 p-12 md:p-18"
+						class:fade-active={readMore[index]}
+					>
+						<button
+							class="inline-flex text-white items-center absolute top-10 right-10"
+							on:click|preventDefault={() => {
+								readMore[index] = false;
+							}}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-10 w-10"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M6 18L18 6M6 6l12 12"
+								/>
+							</svg>
+						</button>
+						<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
+							{section.header}
+						</h2>
+						<div class="text-sm">{@html section.description}</div>
+					</div>
+				</div>
+				<div class="bg-white p-12 md:p-24 flex justify-start items-center">
+					<img src={`/img/${section.image}`} class="w-full max-w-md" />
+				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="grid grid-cols-1 md:grid-cols-2">
-		<div class="bg-gray-100 p-12 md:p-24 flex justify-end items-center">
-			<div class="max-w-md">
-				<div class="w-24 h-2 orange-700 mb-4" />
-				<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
-					Faster development
-				</h2>
-				<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
-					Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the
-					fastest JS framework on the market. The page scores 100% in Lighthouse.
-				</p>
-				<a
-					href="/blog/this-is-latest-post/"
-					class="inline-block border-2 border-orange-700 font-light text-orange-700 text-sm uppercase tracking-widest py-3 px-8 hover:bg-orange-700 hover:text-white"
-					>Read more</a
-				>
+		{:else}
+			<div class="grid grid-cols-1 md:grid-cols-2">
+				<div class="bg-white p-12 md:p-24 flex justify-end items-center">
+					<img src={`/img/${section.image}`} class="w-full max-w-md" />
+				</div>
+				<div class="bg-gray-100 p-12 md:p-24 flex justify-start items-center relative">
+					<div class="max-w-md z-20">
+						<div class="w-24 h-2 orange-700 mb-4" />
+						<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
+							{section.header}
+						</h2>
+						<p class="font-light text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
+							{@html section.text}
+						</p>
+						<button
+							on:click|preventDefault={() => {
+								readMore[index] = true;
+							}}
+							class="inline-block border-2 border-orange-700 font-light text-orange-700 text-sm uppercase tracking-widest py-3 px-8 hover:bg-orange-700 hover:text-white"
+							>Read more</button
+						>
+					</div>
+					<div
+						class="absolute z-10 fade-in overflow-y-auto text-white bg-slate-800 w-full h-full top-0 left-0 p-12 md:p-18"
+						class:fade-active={readMore[index]}
+					>
+						<button
+							class="nline-flex text-white items-center absolute top-10 right-10"
+							on:click|preventDefault={() => {
+								readMore[index] = false;
+							}}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								class="h-10 w-10"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M6 18L18 6M6 6l12 12"
+								/>
+							</svg>
+						</button>
+						<h2 class="font-display font-bold text-2xl md:text-3xl lg:text-4xl mb-6">
+							{section.header}
+						</h2>
+						<div class="text-sm">{@html section.description}</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="bg-white p-12 md:p-24 flex justify-start items-center">
-			<a href="/blog/this-is-latest-post/"
-				><img src="/img/performance.svg" class="w-full max-w-md" /></a
-			>
-		</div>
-	</div>
+		{/if}
+	{/each}
 </div>
 
 <!--
@@ -122,6 +175,22 @@
 </header>
 -->
 <style>
+	.fade-in {
+		-webkit-transition: all 0.2s ease;
+		-moz-transition: all 0.2s ease;
+		-ms-transition: all 0.2s ease;
+		-o-transition: all 0.2s ease;
+		transition: all 0.2s ease;
+		opacity: 0;
+	}
+	.fade-in.fade-active {
+		opacity: 1;
+		z-index: 50;
+	}
+
+	.bg-slate-800 {
+		background-color: rgb(30 41 59);
+	}
 	:global(#tsparticles) {
 		opacity: 1;
 		-webkit-transition: opacity 2s ease;
@@ -137,30 +206,6 @@
 
 	:global(html, body) {
 		background: linear-gradient(45deg, rgba(45, 45, 45, 1) 9%, rgba(0, 0, 0, 1) 100%);
-	}
-	h1.flickering {
-		font-family: 'CoreCircus', sans-serif;
-		font-size: 14vw;
-		text-align: center;
-		line-height: 1;
-		margin: 0;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		position: absolute;
-		color: rgba(45, 45, 45, 1);
-		letter-spacing: -0.5rem;
-	}
-	h1.flickering:before {
-		content: attr(data-heading);
-		position: absolute;
-		overflow: hidden;
-		color: rgb(253 203 0);
-		z-index: 5;
-		text-shadow: none;
-		left: 51%;
-		text-align: left;
-		animation: flicker 3s linear infinite;
 	}
 	@keyframes flicker {
 		0%,

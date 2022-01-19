@@ -3,8 +3,8 @@
 	import createUrl from '$lib/utilities/urlCreator';
 	import { getLangIdByPath } from '$lib/utilities/language';
 
-	export async function load({ fetch, page }) {
-		const url = createUrl(page.path, page.query);
+	export async function load({ fetch, url }) {
+		url = createUrl(url.pathname, url?.searchParams);
 		const langId = getLangIdByPath(url);
 
 		const res = await fetch('/api/common.json', {
