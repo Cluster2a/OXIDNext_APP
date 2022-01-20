@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
 	export async function load({ fetch, url }) {
-		console.log(url);
 		await fetch('/api/user/login.json', {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -17,6 +16,7 @@
 <script lang="ts">
 	import 'virtual:windi.css';
 	import '@fontsource/comfortaa';
+	import '../styles/site.css';
 </script>
 
 <slot />

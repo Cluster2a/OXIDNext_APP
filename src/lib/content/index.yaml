@@ -40,6 +40,26 @@ sections:
       Zorid uses server-side rendering to render the page. The crawler will be able to see the entire source code. The top page speed will result in a 100% Lighthouse score, which also impacts your ranking.
     description: >-
       <p class="mb-4">
+          The storefont is running on a Node.js server on whiche the pages are prerendered. Prendered pages allow crawling bots like google to crawl the source code of your Website even if the backend data is fetched just in time.
+      </p>
+      <p class="mb-4">
+        Google is measuring the quality of a website with it's engine called lighthouse. A high lighthouse score has an impact on your website ranking.
+        Your page will score 100% on each category (Performance, Accessibility, Best Practices, SEO). Running a High Performance Web Site is a good starting point to increase your ranking.
+      </p>
+      <p class="mb-4">
+        Zorid is using the same search engine friendly urls like OXID does. Migrating from an OXID frontend to Zorid won't end in a big redirection husstle and your ranking won't be lost.
+      </p>
+      <p class="mb-4">
+        Zorid is making use of all the relevant SEO best practices like: Keywords, internal linking, web optimized images (WebP), responive layout for mobile devices and structured data.
+
+      </p>
+
+  - header: Faster development
+    image: development.svg
+    text: >-
+      Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the fastest JS framework on the market. The page scores 100% in Lighthouse.
+    description: >-
+      <p class="mb-4">
           Zorin is using GraphQL to fetch data from the backend. Only the data that is shown on the
           frontend is beeing fetched from the server. With this technique the request are as fast as
           possible.
@@ -65,9 +85,8 @@ sections:
       <p>
         WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
       </p>
-
-  - header: Faster development
-    image: performance.svg
+  - header: New Tech Stack
+    image: techstack.svg
     text: >-
       Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the fastest JS framework on the market. The page scores 100% in Lighthouse.
     description: >-
