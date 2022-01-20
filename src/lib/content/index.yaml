@@ -85,7 +85,7 @@ sections:
       <p>
         WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
       </p>
-  - header: New Tech Stack
+  - header: Innovative Tech Stack
     image: techstack.svg
     text: >-
       Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the fastest JS framework on the market. The page scores 100% in Lighthouse.
