@@ -12,11 +12,15 @@
 	let errorText = false;
 	let mailComplete = false;
 
+	const formChanged = () => {
+		mailComplete = false;
+	};
+
 	const handlePending = async (): Promise<void> => {
 		errorName = false;
 		errorEmail = false;
 		errorText = false;
-
+		mailComplete = false;
 		formSubmitting = true;
 	};
 
@@ -76,6 +80,7 @@
 					type="text"
 					name="name"
 					placeholder=""
+					on:keyup={() => formChanged()}
 					required
 					bind:value={msgName}
 					disabled={formSubmitting}
@@ -92,6 +97,7 @@
 					class="w-full bg-gray-300 text-gray-900 mt-2 p-3 focus:outline-none focus:shadow-outline"
 					type="email"
 					name="email"
+					on:keyup={() => formChanged()}
 					required
 					bind:value={msgEmail}
 					disabled={formSubmitting}
@@ -109,6 +115,7 @@
 					class="disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none w-full h-32 bg-gray-300 text-gray-900 mt-2 p-3 focus:outline-none focus:shadow-outline"
 					required
 					bind:value={msgText}
+					on:keyup={() => formChanged()}
 					name="message"
 					class:ring-red-500={errorText}
 					class:ring-2={errorText}
