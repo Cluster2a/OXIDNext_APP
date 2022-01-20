@@ -54,65 +54,31 @@ sections:
 
       </p>
 
-  - header: Faster development
+  - header: Developer experience
     image: development.svg
     text: >-
-      Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the fastest JS framework on the market. The page scores 100% in Lighthouse.
+      A headless approach provides the agility to quickly and regularly update the front end of a web shop. without affecting the backend systems.
     description: >-
       <p class="mb-4">
-          Zorin is using GraphQL to fetch data from the backend. Only the data that is shown on the
-          frontend is beeing fetched from the server. With this technique the request are as fast as
-          possible.
+          GraphQL delivers a better developer experience with a self-describing API, query and mutation input validation, and a single query to your backend that returns exactly the data you need.
       </p>
       <p class="mb-4">
-        All GraphQL requests are batched to one request to minimize the number of requests and the
-        bootstrapping overhead.
+        A major pain point with APIs is outdated or wrong documentation. With GraphQL the API documentation is self describing. Meaning that if the ecommerce API is updated, the documentation reflects this immediately.
       </p>
-
-      <p class="mb-4">Cahing is beeing used on multiple layers:</p>
-
-      <ul class="list-disc ps-4 ml-12 mb-4">
-        <li>Redis in the backend</li>
-        <li>GraphCache in Node.js middleware</li>
-        <li>HTTP Caching for the storefront</li>
-      </ul>
-
       <p class="mb-4">
-        The storefont is based on Svelte-Kit, one of the fastest JavaScript-Frameworks on the
-        market.
+        Autocomplete and Input Validation is a real time saver. When building the query you get autocomplete on the available fields on the explorer UI. If you type something wrong or make an invalid query you immediately get information on what is wrong, both in the visual graph explorer and in the API calls.
       </p>
-
-      <p>
-        WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
+      <p class="mb-4">
+        A solid API ecosystem is essential for your business to be able to grow sustainably in today's age of automation, decentralization and unlimited availability.
       </p>
   - header: Innovative Tech Stack
     image: techstack.svg
     text: >-
-      Zorid takes advantage of multi-layer caching. The storefront is made of SvelteKit - the fastest JS framework on the market. The page scores 100% in Lighthouse.
+      Zorid sets out for new shores using a complet new set of technology. A 100% JavaScript-based environment opens new opportunities for implementing innovative ideas.
     description: >-
       <p class="mb-4">
-          Zorin is using GraphQL to fetch data from the backend. Only the data that is shown on the
-          frontend is beeing fetched from the server. With this technique the request are as fast as
-          possible.
+        PHP obviously is a solid choice when it comes down to web-based tasks that are being processed in the backend. Making a modern, reactive, and high polished user interface requires much more than HTML and CSS. Using a Standalone JavaScript application is a game-changer.
       </p>
       <p class="mb-4">
-        All GraphQL requests are batched to one request to minimize the number of requests and the
-        bootstrapping overhead.
-      </p>
-
-      <p class="mb-4">Cahing is beeing used on multiple layers:</p>
-
-      <ul class="list-disc ps-4 ml-12 mb-4">
-        <li>Redis in the backend</li>
-        <li>GraphCache in Node.js middleware</li>
-        <li>HTTP Caching for the storefront</li>
-      </ul>
-
-      <p class="mb-4">
-        The storefont is based on Svelte-Kit, one of the fastest JavaScript-Frameworks on the
-        market.
-      </p>
-
-      <p>
-        WindyCSS is used for styling all components. As it has an incredibly small footprint, the rendering of the components is blazing fast.
+        Using modern packages like web3 or FingerprintJS is quite a hustle when dealing with a PHP-based monolith. Shifting the frontend to a stand-alone application opens up new possibilities.
       </p>

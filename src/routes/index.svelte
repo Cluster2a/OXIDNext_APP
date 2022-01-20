@@ -2,12 +2,12 @@
 	import type { Index as IndexType } from '$lib/types/content/index';
 	import CMSIndex from '$lib/content/index.yaml';
 	import ContactForm from '$lib/Components/StartPage/ContactForm.svelte';
+	import Particles from '$lib/Components/Particles/index.svelte';
 	import { onMount } from 'svelte';
 
 	const contentIndex: IndexType = CMSIndex;
 	const time = new Intl.DateTimeFormat('de', { year: 'numeric' }).format();
 	let y: number;
-	let mailComplete = false;
 	let readMore = [];
 	for (let index = 0; index < contentIndex.sections.length; index++) {
 		readMore[index] = false;
@@ -26,10 +26,7 @@
 <svelte:window bind:scrollY={y} />
 
 <div class="flex h-screen relative items-center justify-center">
-	<div class="relative">
-		<img src="/img/zoridAnimated.svg" alt="" width="600" height="auto" />
-	</div>
-
+	<img src="/img/zoridAnimated.svg" alt="" width="600" height="auto" class="z-30" />
 	<div class="flex absolute bottom-5 flex-col my-auto items-center animate-bounce">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +48,7 @@
 
 <div class="bg-white relative">
 	<div class="bg-white max-w-xl mx-auto text-center py-24 md:py-32">
-		<div class="w-24 h-2 bg-orange-700 mb-4 mx-auto" />
+		<div class="w-24 h-2 bg-orange-700 mb-8 mx-auto" />
 		<h2 class="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
 			{contentIndex.header.topic}
 		</h2>
@@ -233,7 +230,7 @@
 	</svg>
 </button>
 
-<style>
+<style lang="scss">
 	.fade-in {
 		-webkit-transition: all 0.2s ease;
 		-moz-transition: all 0.2s ease;
@@ -245,20 +242,6 @@
 	.fade-in.fade-active {
 		opacity: 1;
 		z-index: 50;
-	}
-
-	:global(#tsparticles) {
-		opacity: 1;
-		-webkit-transition: opacity 2s ease;
-		transition: opacity 2s ease;
-		-webkit-transition-delay: 1s;
-		transition-delay: 1s;
-		height: 100%;
-		left: 0;
-		top: 0;
-		position: absolute;
-		width: 100%;
-		z-index: -1;
 	}
 
 	:global(html, body) {

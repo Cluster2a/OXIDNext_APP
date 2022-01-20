@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
 	export async function load({ fetch, url }) {
+		return {};
 		await fetch('/api/user/login.json', {
 			method: 'POST',
 			credentials: 'same-origin',

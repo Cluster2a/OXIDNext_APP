@@ -31,13 +31,9 @@
 
 	const handleError = async (res: Response): Promise<void> => {
 		const response = await res.json();
-
 		errorEmail = response.errorEmail === true;
-
 		errorName = response.errorName === true;
-
 		errorText = response.errorText === true;
-
 		formSubmitting = false;
 	};
 </script>
@@ -56,11 +52,12 @@
 				</div>
 			</div>
 			<div class="mt-8 text-center">
-				{#if mailComplete === true}
-					<img src="/img/contact-complete.svg" class="w-full max-w-md h-80" />
-				{:else}
-					<img src="/img/contact.svg" class="w-full max-w-md h-80" />
-				{/if}
+				<img
+					src="/img/contact-complete.svg"
+					class="w-full max-w-md h-80"
+					class:hidden={!mailComplete}
+				/>
+				<img src="/img/contact.svg" class="w-full max-w-md h-80" class:hidden={mailComplete} />
 			</div>
 		</div>
 		<form
@@ -121,6 +118,12 @@
 					class:cursor-not-allowed={formSubmitting}
 				/>
 			</div>
+
+			<div class="mt-8">
+				This form collects your name, email address and your Message so we can process your request.
+				Find more information in our <a href="/privacy" target="_blank">Privacy Policy</a>.
+			</div>
+
 			<div class="mt-8">
 				<input
 					type="checkbox"
@@ -167,39 +170,3 @@
 		</form>
 	</div>
 </div>
-
-<style lang="scss">
-	.button--loading {
-		&.uk-button-primary {
-			background-color: #ff46003d;
-			border: 1px solid transparent;
-		}
-	}
-
-	.button--loading {
-		color: transparent !important;
-		pointer-events: none;
-
-		&:after {
-			content: '';
-			box-sizing: border-box;
-			position: absolute;
-			top: calc(50% - 10px);
-			left: calc(50% - 10px);
-			width: 20px;
-			height: 20px;
-			margin-top: auto;
-			margin-left: auto;
-			border-radius: 50%;
-			border: 2px solid #c2410c;
-			border-top-color: transparent;
-			animation: spinner 0.6s linear infinite;
-		}
-	}
-
-	@keyframes spinner {
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>
