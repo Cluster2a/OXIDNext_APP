@@ -201,7 +201,7 @@
 			</div>
 		</nav>
 		<div class="mt-8 flex justify-center space-x-6">
-			<img src="/img/zorid-icon.svg" alt="" width="100" height="auto" />
+			<img src="/img/zorid-icon.svg" alt="" class="h-15 w-auto" />
 		</div>
 		<p class="mt-8 text-center text-base text-gray-400">
 			© {time} Alexander Hirschfeld. All rights reserved.

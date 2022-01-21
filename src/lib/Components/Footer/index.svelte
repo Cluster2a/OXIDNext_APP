@@ -4,11 +4,7 @@
 		<div class="border-t border-gray-200">
 			<div class="pt-16 pb-20">
 				<div class="md:flex md:justify-center">
-					<img
-						src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-						alt=""
-						class="h-8 w-auto"
-					/>
+					<img src="/img/zorid-icon.svg" alt="" style="filter: invert(1);" class="h-15 w-auto" />
 				</div>
 				<div class="mt-16 max-w-5xl mx-auto xl:grid xl:grid-cols-2 xl:gap-8">
 					<div class="grid grid-cols-2 gap-8 xl:col-span-2">

@@ -50,7 +50,7 @@
 			<div>
 				<h2 class="text-4xl lg:text-5xl font-bold leading-tight">You got any questions?</h2>
 				<div class="text-gray-700 mt-8">
-					Hate forms? Send us an <span class="underline"
+					Don't like forms? Send us an <span class="underline"
 						><a href="mailto: info@zorid.de" target="_blank">email</a></span
 					> instead.
 				</div>
